@@ -249,7 +249,6 @@
         .grid-item:hover { transform:translateY(-1px); }
         .item-label { font-size:10px; margin-bottom:4px; font-family:'JetBrains Mono',monospace; }
         .item-value { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
-        /* 背景色彩設定省略部分維持不變... */
         .grid-item.drop-5  { background:rgba(56,189,248,.10);  border:1px solid rgba(56,189,248,.45);  border-left:3px solid #38bdf8; }
         .grid-item.drop-5  .item-label{color:#7dd3fc} .grid-item.drop-5  .item-value{color:#38bdf8}
         .grid-item.drop-10 { background:rgba(99,210,160,.10);  border:1px solid rgba(99,210,160,.45);  border-left:3px solid #63d2a0; }
@@ -328,10 +327,19 @@
         }
         
         /* ── Footer ── */
-        .footer-bar { display:flex; justify-content:space-between; align-items:center; margin-top:12px; }
+        .footer-bar { display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:10px; }
         .note { font-size:11px; color:var(--text-muted); }
         #proxyStatus { font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
         
+        /* 資料管理按鈕 (匯出/匯入) */
+        .data-mgmt { display:flex; gap:8px; align-items:center; }
+        .data-mgmt button {
+            background: var(--bg-section); border: 1px solid var(--border-accent);
+            color: var(--text-secondary); padding: 6px 12px; border-radius: 6px;
+            font-size: 12px; cursor: pointer; transition: all 0.2s;
+        }
+        .data-mgmt button:hover { background: var(--border-accent); color: #fff; }
+
         @media (max-width:640px) {
             .data-grid { grid-template-columns:repeat(3,1fr); }
             .data-grid-fib { grid-template-columns:repeat(2,1fr); }
@@ -374,7 +382,6 @@
     
     <div id="portfolio-container" style="display:none; width:100%;">
         <div id="portfolio-summary-area"></div>
-        
         <div class="port-form-box">
             <span style="font-size:13px; color:var(--text-secondary); font-weight:bold;">➕ 買入新持股</span>
             <input id="pCode" placeholder="代號 (如 2330)" onkeypress="if(event.key==='Enter') document.getElementById('pCost').focus()">
@@ -382,12 +389,15 @@
             <input id="pShares" type="number" step="any" placeholder="持有股數" onkeypress="if(event.key==='Enter') addPortfolioItem()">
             <button onclick="addPortfolioItem()">確認新增</button>
         </div>
-        
         <div id="portfolio-list-area"></div>
     </div>
     
     <div class="footer-bar">
         <div class="note">Yahoo Finance · Cloudflare Worker · 開盤 09:00–13:50 每 30 秒自動更新</div>
+        <div class="data-mgmt">
+            <button onclick="exportData()" title="將所有設定匯出為檔案">💾 匯出備份</button>
+            <button onclick="importData()" title="從備份檔案匯入設定">📂 匯入資料</button>
+        </div>
         <div id="proxyStatus"></div>
     </div>
 </div>
@@ -399,8 +409,8 @@
 var WORKER_URL = 'https://solitary-star-284f.wait70319.workers.dev';
 
 // 全局變數
-var activeGroup = 'ALL'; // 當前選擇的頁籤
-var portChartInst = null; // 圓餅圖實例
+var activeGroup = 'ALL'; 
+var portChartInst = null; 
 
 // ═══════════════════════════════════════════
 // 資料庫初始化：自選股 (stocks) 與 持股 (portfolio)
@@ -417,11 +427,67 @@ try {
     stocks = saved.length > 0 ? saved : DEFAULT_STOCKS;
 } catch(e) { stocks = DEFAULT_STOCKS; }
 
-// 持股資料庫結構: { code, yahoo, cost, shares, current, dp }
 var portfolio = [];
 try {
     portfolio = JSON.parse(localStorage.getItem('portfolioDataV1') || '[]');
 } catch(e) { portfolio = []; }
+
+// ═══════════════════════════════════════════
+// 匯出與匯入功能 (Import / Export)
+// ═══════════════════════════════════════════
+function exportData() {
+    var backupData = {
+        stocks: stocks,
+        portfolio: portfolio,
+        exportDate: new Date().toISOString()
+    };
+    var blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = "stock_dashboard_backup_" + new Date().toISOString().slice(0,10) + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function importData() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            try {
+                var data = JSON.parse(evt.target.result);
+                var imported = false;
+                if (data.stocks && Array.isArray(data.stocks)) {
+                    stocks = data.stocks;
+                    localStorage.setItem('stockDataV4', JSON.stringify(stocks));
+                    imported = true;
+                }
+                if (data.portfolio && Array.isArray(data.portfolio)) {
+                    portfolio = data.portfolio;
+                    localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio));
+                    imported = true;
+                }
+                if (imported) {
+                    alert('資料匯入成功！系統將重新載入。');
+                    location.reload(); 
+                } else {
+                    alert('匯入失敗：檔案中沒有可用的資料。');
+                }
+            } catch (err) {
+                alert('匯入失敗：檔案格式不正確或損壞。');
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
 
 // ═══════════════════════════════════════════
 // Proxy 建構與時間判定
@@ -615,7 +681,6 @@ async function fetchOne(i) {
 async function fetchOnePortfolio(i) {
     var p = portfolio[i];
     var sym = p.yahoo;
-    // Offset array index to distribute proxy load if multiple proxies exist
     var result = await yahooFetch(sym, 1000 + i); 
     
     if (!result && /\.TW$/i.test(sym)) {
@@ -632,7 +697,6 @@ async function fetchOnePortfolio(i) {
         portfolio[i].current = price;
     }
     
-    // 如果目前停留在持股頁面，每次抓到一檔就更新一次持股 UI 數字
     if (activeGroup === 'PORTFOLIO') {
         renderPortfolio();
     }
@@ -700,7 +764,7 @@ function addNewStock() {
     var yahooCode = guessYahooCode(raw);
     var cleanCode = raw.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,'').replace(/=.*/g,'');
     stocks.push({ group:grp, code:cleanCode, yahoo:yahooCode, highest:0, low:'', current:'', dp:2 });
-    activeGroup = grp; // 切換至該群組
+    activeGroup = grp; 
     try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
     render(); fetchOne(stocks.length - 1);
     document.getElementById('newCode').value = '';
@@ -749,10 +813,8 @@ function addPortfolioItem() {
     
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     
-    // 清空輸入框
     codeInput.value = ''; costInput.value = ''; sharesInput.value = '';
     
-    // 立刻抓取新加入的這檔價格並更新畫面
     renderPortfolio();
     fetchOnePortfolio(portfolio.length - 1);
 }
@@ -778,7 +840,6 @@ function render() {
     var portCont = document.getElementById('portfolio-container');
     var normCtrl = document.getElementById('normal-controls');
 
-    // 切換顯示容器
     if (activeGroup === 'PORTFOLIO') {
         normCont.style.display = 'none';
         portCont.style.display = 'block';
@@ -790,7 +851,6 @@ function render() {
         if(normCtrl) normCtrl.style.display = 'flex';
     }
     
-    // 渲染上方頁籤
     if(tabsCont) {
         var groups = [];
         stocks.forEach(function(s) { if (groups.indexOf(s.group) === -1) groups.push(s.group); });
@@ -806,7 +866,6 @@ function render() {
         tabsCont.innerHTML = portHtml + allHtml + tabsHtml;
     }
     
-    // 若不是持股頁面，則渲染一般卡片
     if (activeGroup !== 'PORTFOLIO') {
         normCont.innerHTML = '';
         var groups = [];
@@ -880,14 +939,13 @@ function renderPortfolio() {
     var labels = [], chartData = [];
     var pieColors = ['#f59e0b', '#4d9fff', '#ff4d6d', '#00d68f', '#a855f7', '#38bdf8', '#c084fc', '#fb923c'];
 
-    // 1. 產生個別持股卡片 HTML 並累計總和
     var listHtml = portfolio.map(function(p, i) {
         var cost = parseFloat(p.cost) || 0;
         var shares = parseFloat(p.shares) || 0;
         var cur = parseFloat(p.current);
         
         var sumCost = cost * shares;
-        var sumVal = !isNaN(cur) ? (cur * shares) : sumCost; // 若抓不到現價，市值先以成本計
+        var sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
         var pl = sumVal - sumCost;
         var roi = sumCost > 0 ? (pl / sumCost) * 100 : 0;
         
@@ -895,11 +953,9 @@ function renderPortfolio() {
         var cardCc = pl > 0 ? 'up-card' : pl < 0 ? 'down-card' : '';
         var sign = pl > 0 ? '+' : '';
 
-        // 累計到總數
         totalCost += sumCost;
         totalValue += sumVal;
         
-        // 給圓餅圖的資料
         if (sumVal > 0) {
             labels.push(p.code);
             chartData.push(sumVal);
@@ -929,7 +985,6 @@ function renderPortfolio() {
     
     listArea.innerHTML = listHtml || '<div style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">目前沒有任何持股，請從上方新增。</div>';
 
-    // 2. 產生總覽儀表板
     var totalPL = totalValue - totalCost;
     var totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0;
     var tcc = totalPL > 0 ? 'up' : totalPL < 0 ? 'down' : '';
@@ -952,7 +1007,6 @@ function renderPortfolio() {
         '<div class="port-chart-container"><canvas id="portPieChart"></canvas></div>' +
     '</div>';
 
-    // 3. 繪製圓餅圖 (Chart.js)
     if (portChartInst) { portChartInst.destroy(); portChartInst = null; }
     
     var canvas = document.getElementById('portPieChart');
@@ -1003,19 +1057,16 @@ async function fetchAll() {
     var btn = document.getElementById('updateBtn');
     if (btn) { btn.disabled = true; btn.textContent = '同步中…'; }
 
-    // 1. 依序更新一般自選股
     for (let i = 0; i < stocks.length; i++) {
         await fetchOne(i);
         await new Promise(resolve => setTimeout(resolve, 200)); 
     }
     
-    // 2. 依序更新持股專區
     for (let i = 0; i < portfolio.length; i++) {
         await fetchOnePortfolio(i);
         await new Promise(resolve => setTimeout(resolve, 200)); 
     }
 
-    // 儲存最新的結果
     try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     
