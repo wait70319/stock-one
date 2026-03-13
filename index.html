@@ -373,7 +373,7 @@
                 <input id="newGroup" placeholder="群組名稱" value="📊 自選" style="width:105px;">
                 <input id="newCode" placeholder="新增代碼 如 2330" onkeypress="if(event.key==='Enter') addNewStock()" style="width:140px;">
                 <button onclick="addNewStock()">+ 新增自選</button>
-                <button class="btn-sort" onclick="sortStocksByGroup()" title="依群組與代碼重新排列">🗂️ 整理</button>
+                <button class="btn-sort" onclick="sortStocksByGroup()" title="依設定群組順序與代碼重新排列">🗂️ 整理</button>
             </div>
             <div class="sync-row">
                 <div id="statusBar"><span class="dot"></span><span id="statusTxt">計算中…</span></div>
@@ -419,12 +419,25 @@ var activeGroup = 'ALL';
 var portChartInst = null; 
 
 // ═══════════════════════════════════════════
+// 群組排序權重函數 (決定頁籤與整理的順序)
+// ═══════════════════════════════════════════
+function getGroupWeight(g) {
+    if (g.indexOf('自選') !== -1) return 1;
+    if (g.indexOf('台股') !== -1 || g.indexOf('台灣股市') !== -1) return 2;
+    if (g.indexOf('期貨') !== -1) return 3;
+    if (g.indexOf('外匯') !== -1) return 4;
+    return 99; // 其他自訂群組往後排
+}
+
+// ═══════════════════════════════════════════
 // 資料庫初始化：自選股 (stocks) 與 持股 (portfolio)
 // ═══════════════════════════════════════════
 var DEFAULT_STOCKS = [
     { group:'📊 台灣股市', code:'台灣加權', yahoo:'^TWII', highest:35414.54, low:'26434.94', current:'', dp:2 },
     { group:'📊 台灣股市', code:'00982A', yahoo:'00982A.TW', highest:16.76, low:'', current:'', dp:2 },
-    { group:'📊 台灣股市', code:'00949', yahoo:'00949.TW', highest:20.88, low:'', current:'', dp:2 }
+    { group:'📊 台灣股市', code:'00949', yahoo:'00949.TW', highest:20.88, low:'', current:'', dp:2 },
+    { group:'🛢 商品期貨', code:'黃金期貨 XAU', yahoo:'GC=F', highest:0, low:'', current:'', dp:2 },
+    { group:'💱 外匯', code:'美元/日元', yahoo:'JPY=X', highest:0, low:'', current:'', dp:4 }
 ];
 
 var stocks = [];
@@ -442,26 +455,19 @@ try {
 // 匯出與匯入功能 (Import / Export)
 // ═══════════════════════════════════════════
 function exportData() {
-    var backupData = {
-        stocks: stocks,
-        portfolio: portfolio,
-        exportDate: new Date().toISOString()
-    };
+    var backupData = { stocks: stocks, portfolio: portfolio, exportDate: new Date().toISOString() };
     var blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
     a.download = "stock_dashboard_backup_" + new Date().toISOString().slice(0,10) + ".json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
 function importData() {
     var input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
+    input.type = 'file'; input.accept = '.json';
     input.onchange = function(e) {
         var file = e.target.files[0];
         if (!file) return;
@@ -483,12 +489,8 @@ function importData() {
                 if (imported) {
                     alert('資料匯入成功！系統將重新載入。');
                     location.reload(); 
-                } else {
-                    alert('匯入失敗：檔案中沒有可用的資料。');
-                }
-            } catch (err) {
-                alert('匯入失敗：檔案格式不正確或損壞。');
-            }
+                } else { alert('匯入失敗：檔案中沒有可用的資料。'); }
+            } catch (err) { alert('匯入失敗：檔案格式不正確或損壞。'); }
         };
         reader.readAsText(file);
     };
@@ -526,16 +528,12 @@ function statusLabel(sec) {
     return '今日已收盤';
 }
 function refreshStatus() {
-    var bar = document.getElementById('statusBar');
-    var txt = document.getElementById('statusTxt');
+    var bar = document.getElementById('statusBar'), txt = document.getElementById('statusTxt');
     if (!bar || !txt) return;
     if (isTradingHours()) {
         bar.className = countdown <= 5 ? 'soon' : 'trading';
         txt.textContent = statusLabel(countdown);
-    } else {
-        bar.className = '';
-        txt.textContent = statusLabel(0);
-    }
+    } else { bar.className = ''; txt.textContent = statusLabel(0); }
 }
 
 // ═══════════════════════════════════════════
@@ -558,9 +556,7 @@ function proxyFetch(proxy, url, ms) {
 }
 
 async function yahooFetch(sym, offsetIdx) {
-    var ts = Date.now();
-    var proxy = PROXIES[(offsetIdx || 0) % PROXIES.length];
-    
+    var ts = Date.now(), proxy = PROXIES[(offsetIdx || 0) % PROXIES.length];
     var v8url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(sym) + '?interval=5m&range=1d&includePrePost=false&_=' + ts;
     var v7url = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(sym) + '&_=' + ts;
 
@@ -569,13 +565,11 @@ async function yahooFetch(sym, offsetIdx) {
         var r = json && json.chart && json.chart.result && json.chart.result[0];
         if (r && r.meta && r.meta.regularMarketPrice != null) return { type: 'chart', data: r };
     } catch(e) {}
-    
     try {
         var json2 = await proxyFetch(proxy, v7url, 10000);
         var r2 = json2 && json2.quoteResponse && json2.quoteResponse.result && json2.quoteResponse.result[0];
         if (r2 && r2.regularMarketPrice != null) return { type: 'quote', data: r2 };
     } catch(e) {}
-    
     return null;
 }
 
@@ -591,11 +585,9 @@ function drawChart(i, timestamps, prices, prevClose) {
     var dpr = window.devicePixelRatio || 1;
     canvas.width = w * dpr; canvas.height = h * dpr;
     canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    var ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
+    var ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
 
-    var isUp = prices[prices.length - 1] >= prevClose;
-    var mc = isUp ? '#ff4d6d' : '#00d68f';
+    var isUp = prices[prices.length - 1] >= prevClose, mc = isUp ? '#ff4d6d' : '#00d68f';
     var grad = ctx.createLinearGradient(0, 0, 0, h);
     grad.addColorStop(0, isUp ? 'rgba(255,77,109,0.25)' : 'rgba(0,214,143,0.25)');
     grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -612,8 +604,7 @@ function applyChart(i, chartData, prevClose) {
     var allTs = chartData.timestamp || [];
     var closes = (chartData.indicators && chartData.indicators.quote && chartData.indicators.quote[0]) ? (chartData.indicators.quote[0].close || []) : [];
     if (!allTs.length || !closes.length) return;
-    var todayStr = new Date(allTs[allTs.length - 1] * 1000).toDateString();
-    var dTs = [], dPs = [];
+    var todayStr = new Date(allTs[allTs.length - 1] * 1000).toDateString(), dTs = [], dPs = [];
     for (var j = 0; j < allTs.length; j++) {
         if (closes[j] != null && new Date(allTs[j] * 1000).toDateString() === todayStr) { dTs.push(allTs[j]); dPs.push(closes[j]); }
     }
@@ -621,17 +612,14 @@ function applyChart(i, chartData, prevClose) {
 }
 
 // ═══════════════════════════════════════════
-// 資料抓取與 UI 更新 (包含自選股與持股)
+// 資料抓取與 UI 更新
 // ═══════════════════════════════════════════
 var isFetching = false;
 
-// 1. 抓取一般自選股
 async function fetchOne(i) {
-    var stock = stocks[i], sym = stock.yahoo;
-    var pEl = document.getElementById('price-' + i);
-    var isVisible = (pEl !== null); 
-    
+    var stock = stocks[i], sym = stock.yahoo, pEl = document.getElementById('price-' + i), isVisible = (pEl !== null); 
     var result = await yahooFetch(sym, i);
+    
     if (!result && /\.TW$/i.test(sym)) {
         var symTWO = sym.replace(/\.TW$/i, '.TWO');
         result = await yahooFetch(symTWO, i);
@@ -664,61 +652,43 @@ async function fetchOne(i) {
 
     if (isVisible) {
         var diff = price - prevClose, pct = prevClose ? (diff / prevClose) * 100 : 0;
-        var cc = diff > 0 ? 'up' : diff < 0 ? 'down' : '';
-        var fd = stock.dp !== undefined ? stock.dp : 2;
+        var cc = diff > 0 ? 'up' : diff < 0 ? 'down' : '', fd = stock.dp !== undefined ? stock.dp : 2;
 
-        var inpEl = document.getElementById('inp-cur-' + i);
-        if (inpEl) inpEl.value = price;
-
+        var inpEl = document.getElementById('inp-cur-' + i); if (inpEl) inpEl.value = price;
         pEl.className = 'current-price ' + cc; pEl.textContent = price.toFixed(fd);
+        
         var cEl = document.getElementById('chg-' + i);
         if (cEl) { cEl.textContent = (diff > 0 ? '▲ ' : diff < 0 ? '▼ ' : '') + Math.abs(diff).toFixed(fd) + ' (' + (pct > 0 ? '+' : '') + pct.toFixed(2) + '%)'; cEl.className = 'price-change ' + cc; }
+        
         var card = pEl.closest('.card');
         if (card) { card.classList.toggle('up-card', diff > 0); card.classList.toggle('down-card', diff < 0); }
-        var vEl = document.getElementById('vol-' + i);
-        if (vEl && volume != null) vEl.textContent = Number(volume).toLocaleString();
+        
+        var vEl = document.getElementById('vol-' + i); if (vEl && volume != null) vEl.textContent = Number(volume).toLocaleString();
         
         calculateAll(i);
         if (chartData) applyChart(i, chartData, prevClose);
     }
 }
 
-// 2. 抓取持股專用
 async function fetchOnePortfolio(i) {
-    var p = portfolio[i];
-    var sym = p.yahoo;
+    var p = portfolio[i], sym = p.yahoo;
     var result = await yahooFetch(sym, 1000 + i); 
-    
     if (!result && /\.TW$/i.test(sym)) {
         var symTWO = sym.replace(/\.TW$/i, '.TWO');
         result = await yahooFetch(symTWO, 1000 + i);
-        if (result) {
-            portfolio[i].yahoo = symTWO;
-            try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-        }
+        if (result) { portfolio[i].yahoo = symTWO; try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {} }
     }
-
     if (result) {
-        var price = result.type === 'chart' ? result.data.meta.regularMarketPrice : result.data.regularMarketPrice;
-        portfolio[i].current = price;
+        portfolio[i].current = result.type === 'chart' ? result.data.meta.regularMarketPrice : result.data.regularMarketPrice;
     }
-    
-    if (activeGroup === 'PORTFOLIO') {
-        renderPortfolio();
-    }
+    if (activeGroup === 'PORTFOLIO') renderPortfolio();
 }
 
-// ═══════════════════════════════════════════
-// 計算與互動功能 (自選股)
-// ═══════════════════════════════════════════
 function calculateAll(i) {
     var high = parseFloat(stocks[i].highest) || 0, low = parseFloat(stocks[i].low) || 0, cur = parseFloat(stocks[i].current);
-    var fd = stocks[i].dp !== undefined ? stocks[i].dp : 2;
-    var dEl = document.getElementById('diff-' + i);
+    var fd = stocks[i].dp !== undefined ? stocks[i].dp : 2, dEl = document.getElementById('diff-' + i);
     if (!dEl) return;
-    if (isNaN(cur) || high === 0) {
-        dEl.textContent = '—'; dEl.className = 'result-val';
-    } else {
+    if (isNaN(cur) || high === 0) { dEl.textContent = '—'; dEl.className = 'result-val'; } else {
         var d = cur - high, p = (d / high) * 100, s = d > 0 ? '+' : '';
         dEl.innerHTML = s + d.toFixed(fd) + '&nbsp;(' + s + p.toFixed(2) + '%)';
         dEl.className = 'result-val ' + (d > 0 ? 'up' : d < 0 ? 'down' : '');
@@ -739,6 +709,9 @@ function calculateAll(i) {
     }
 }
 
+// ═══════════════════════════════════════════
+// 互動事件處理
+// ═══════════════════════════════════════════
 function onInputChange(i) {
     stocks[i].highest = document.getElementById('inp-hi-' + i).value;
     stocks[i].low = document.getElementById('inp-lo-' + i).value;
@@ -776,10 +749,13 @@ function addNewStock() {
     document.getElementById('newCode').value = '';
 }
 
+// ✅ 升級：整理股票時，依照設定的「群組權重」進行排序！
 function sortStocksByGroup() {
     if (isFetching) { alert('請等待同步完成後再整理！'); return; }
     stocks.sort(function(a, b) {
         var gA = a.group || '', gB = b.group || '';
+        var wA = getGroupWeight(gA), wB = getGroupWeight(gB);
+        if (wA !== wB) return wA - wB;
         if (gA < gB) return -1; if (gA > gB) return 1;
         var cA = a.code || '', cB = b.code || '';
         if (cA < cB) return -1; if (cA > cB) return 1;
@@ -789,51 +765,32 @@ function sortStocksByGroup() {
     render();
 }
 
-// ═══════════════════════════════════════════
-// 持股管理專用功能 (Portfolio)
-// ═══════════════════════════════════════════
 function addPortfolioItem() {
-    var codeInput = document.getElementById('pCode');
-    var costInput = document.getElementById('pCost');
-    var sharesInput = document.getElementById('pShares');
+    var codeInput = document.getElementById('pCode'), costInput = document.getElementById('pCost'), sharesInput = document.getElementById('pShares');
+    var rawCode = codeInput.value.trim(), cost = parseFloat(costInput.value), shares = parseFloat(sharesInput.value);
     
-    var rawCode = codeInput.value.trim();
-    var cost = parseFloat(costInput.value);
-    var shares = parseFloat(sharesInput.value);
-    
-    if (!rawCode || isNaN(cost) || isNaN(shares) || shares <= 0) {
-        alert("請完整輸入代號、成本與持股數量！");
-        return;
-    }
-    
-    var yahooCode = guessYahooCode(rawCode);
-    var cleanCode = rawCode.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,'');
+    if (!rawCode || isNaN(cost) || isNaN(shares) || shares <= 0) { alert("請完整輸入代號、成本與持股數量！"); return; }
     
     portfolio.push({
-        code: cleanCode,
-        yahoo: yahooCode,
-        cost: cost,
-        shares: shares,
-        current: ''
+        code: rawCode.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,''),
+        yahoo: guessYahooCode(rawCode),
+        cost: cost, shares: shares, current: ''
     });
     
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-    
     codeInput.value = ''; costInput.value = ''; sharesInput.value = '';
     
-    renderPortfolio();
-    fetchOnePortfolio(portfolio.length - 1);
+    renderPortfolio(); fetchOnePortfolio(portfolio.length - 1);
 }
 
 function deletePortfolio(i) {
     if (!confirm('確定刪除持股「' + portfolio[i].code + '」？')) return;
-    portfolio.splice(i, 1);
-    try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
+    portfolio.splice(i, 1); try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     renderPortfolio();
 }
 
 // ═══════════════════════════════════════════
-// 渲染畫面：總管
+// 渲染畫面：總管與頁籤生成 (包含自訂順序邏輯)
 // ═══════════════════════════════════════════
 function setGroup(grp) {
     activeGroup = grp;
@@ -857,27 +814,57 @@ function render() {
         if(normCtrl) normCtrl.style.display = 'flex';
     }
     
+    // ✅ 依照您指定的順序動態生成上方頁籤
     if(tabsCont) {
         var groups = [];
         stocks.forEach(function(s) { if (groups.indexOf(s.group) === -1) groups.push(s.group); });
         
-        var portHtml = '<button class="group-tab tab-portfolio ' + (activeGroup === 'PORTFOLIO' ? 'active' : '') + '" onclick="setGroup(\'PORTFOLIO\')">💼 我的持股</button>';
-        var allHtml = '<button class="group-tab ' + (activeGroup === 'ALL' ? 'active' : '') + '" onclick="setGroup(\'ALL\')">🌐 一般看板 (全部)</button>';
+        // 利用我們寫好的權重函數把抓到的群組排序
+        groups.sort(function(a, b) {
+            var wA = getGroupWeight(a), wB = getGroupWeight(b);
+            if (wA !== wB) return wA - wB;
+            return a < b ? -1 : (a > b ? 1 : 0);
+        });
         
-        var tabsHtml = groups.map(function(g) {
+        var html = '';
+        
+        // 1. 💼 我的持股
+        html += '<button class="group-tab tab-portfolio ' + (activeGroup === 'PORTFOLIO' ? 'active' : '') + '" onclick="setGroup(\'PORTFOLIO\')">💼 我的持股</button>';
+        
+        // 2. 📊 自選 (如果有這個群組，就抽出來放第二個)
+        var ziXuanGroup = null;
+        for (var i = 0; i < groups.length; i++) {
+            if (getGroupWeight(groups[i]) === 1) { ziXuanGroup = groups[i]; groups.splice(i, 1); break; }
+        }
+        if (ziXuanGroup) {
+            html += '<button class="group-tab ' + (activeGroup === ziXuanGroup ? 'active' : '') + '" onclick="setGroup(\'' + ziXuanGroup + '\')">' + ziXuanGroup + '</button>';
+        }
+
+        // 3. 🌐 一般看板
+        html += '<button class="group-tab ' + (activeGroup === 'ALL' ? 'active' : '') + '" onclick="setGroup(\'ALL\')">🌐 一般看板</button>';
+
+        // 4. 其餘動態群組 (已經按照 台股 ➔ 期貨 ➔ 外匯 排序過了)
+        groups.forEach(function(g) {
             var isActive = (activeGroup === g) ? 'active' : '';
-            return '<button class="group-tab ' + isActive + '" onclick="setGroup(\'' + g + '\')">' + g + '</button>';
-        }).join('');
+            html += '<button class="group-tab ' + isActive + '" onclick="setGroup(\'' + g + '\')">' + g + '</button>';
+        });
         
-        tabsCont.innerHTML = portHtml + allHtml + tabsHtml;
+        tabsCont.innerHTML = html;
     }
     
     if (activeGroup !== 'PORTFOLIO') {
         normCont.innerHTML = '';
-        var groups = [];
-        stocks.forEach(function(s) { if (groups.indexOf(s.group) === -1) groups.push(s.group); });
+        var displayGroups = [];
+        stocks.forEach(function(s) { if (displayGroups.indexOf(s.group) === -1) displayGroups.push(s.group); });
         
-        groups.forEach(function(g) {
+        // ✅ 讓底下渲染出來的標題區塊，也完美遵守這個順序
+        displayGroups.sort(function(a, b) {
+            var wA = getGroupWeight(a), wB = getGroupWeight(b);
+            if (wA !== wB) return wA - wB;
+            return a < b ? -1 : (a > b ? 1 : 0);
+        });
+        
+        displayGroups.forEach(function(g) {
             if (activeGroup !== 'ALL' && activeGroup !== g) return;
             normCont.insertAdjacentHTML('beforeend', '<div class="group-header">' + g + '</div>');
             
@@ -941,31 +928,18 @@ function renderPortfolio() {
     var listArea = document.getElementById('portfolio-list-area');
     if (!sumArea || !listArea) return;
     
-    var totalCost = 0, totalValue = 0;
-    var labels = [], chartData = [];
+    var totalCost = 0, totalValue = 0, labels = [], chartData = [];
     var pieColors = ['#f59e0b', '#4d9fff', '#ff4d6d', '#00d68f', '#a855f7', '#38bdf8', '#c084fc', '#fb923c'];
 
     var listHtml = portfolio.map(function(p, i) {
-        var cost = parseFloat(p.cost) || 0;
-        var shares = parseFloat(p.shares) || 0;
-        var cur = parseFloat(p.current);
+        var cost = parseFloat(p.cost) || 0, shares = parseFloat(p.shares) || 0, cur = parseFloat(p.current);
+        var sumCost = cost * shares, sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
+        var pl = sumVal - sumCost, roi = sumCost > 0 ? (pl / sumCost) * 100 : 0;
         
-        var sumCost = cost * shares;
-        var sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
-        var pl = sumVal - sumCost;
-        var roi = sumCost > 0 ? (pl / sumCost) * 100 : 0;
-        
-        var cc = pl > 0 ? 'up' : pl < 0 ? 'down' : '';
-        var cardCc = pl > 0 ? 'up-card' : pl < 0 ? 'down-card' : '';
-        var sign = pl > 0 ? '+' : '';
+        var cc = pl > 0 ? 'up' : pl < 0 ? 'down' : '', cardCc = pl > 0 ? 'up-card' : pl < 0 ? 'down-card' : '', sign = pl > 0 ? '+' : '';
 
-        totalCost += sumCost;
-        totalValue += sumVal;
-        
-        if (sumVal > 0) {
-            labels.push(p.code);
-            chartData.push(sumVal);
-        }
+        totalCost += sumCost; totalValue += sumVal;
+        if (sumVal > 0) { labels.push(p.code); chartData.push(sumVal); }
 
         return '' +
         '<div class="port-card ' + cardCc + '">' +
@@ -991,25 +965,14 @@ function renderPortfolio() {
     
     listArea.innerHTML = listHtml || '<div style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">目前沒有任何持股，請從上方新增。</div>';
 
-    var totalPL = totalValue - totalCost;
-    var totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0;
-    var tcc = totalPL > 0 ? 'up' : totalPL < 0 ? 'down' : '';
-    var tsign = totalPL > 0 ? '+' : '';
+    var totalPL = totalValue - totalCost, totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0;
+    var tcc = totalPL > 0 ? 'up' : totalPL < 0 ? 'down' : '', tsign = totalPL > 0 ? '+' : '';
     
     sumArea.innerHTML = '' +
     '<div class="port-summary-box">' +
-        '<div class="port-metric">' +
-            '<div class="label">總資產市值</div>' +
-            '<div class="val">' + totalValue.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>' +
-        '</div>' +
-        '<div class="port-metric">' +
-            '<div class="label">總未實現損益</div>' +
-            '<div class="val ' + tcc + '">' + tsign + totalPL.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>' +
-        '</div>' +
-        '<div class="port-metric">' +
-            '<div class="label">總報酬率</div>' +
-            '<div class="val ' + tcc + '">' + tsign + totalROI.toFixed(2) + '%</div>' +
-        '</div>' +
+        '<div class="port-metric"><div class="label">總資產市值</div><div class="val">' + totalValue.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
+        '<div class="port-metric"><div class="label">總未實現損益</div><div class="val ' + tcc + '">' + tsign + totalPL.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
+        '<div class="port-metric"><div class="label">總報酬率</div><div class="val ' + tcc + '">' + tsign + totalROI.toFixed(2) + '%</div></div>' +
         '<div class="port-chart-container"><canvas id="portPieChart"></canvas></div>' +
     '</div>';
 
@@ -1020,33 +983,14 @@ function renderPortfolio() {
         var ctx = canvas.getContext('2d');
         portChartInst = new Chart(ctx, {
             type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: chartData,
-                    backgroundColor: pieColors,
-                    borderWidth: 2,
-                    borderColor: '#0e1520',
-                    hoverOffset: 6
-                }]
-            },
+            data: { labels: labels, datasets: [{ data: chartData, backgroundColor: pieColors, borderWidth: 2, borderColor: '#0e1520', hoverOffset: 6 }] },
             options: {
-                responsive: true, maintainAspectRatio: false,
-                cutout: '65%',
+                responsive: true, maintainAspectRatio: false, cutout: '65%',
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(18, 28, 42, 0.95)',
-                        titleColor: '#e8f0fe', bodyColor: '#7a9cc4',
-                        borderColor: '#2a4878', borderWidth: 1,
-                        padding: 10,
-                        callbacks: {
-                            label: function(context) {
-                                var val = context.raw;
-                                var pct = ((val / totalValue) * 100).toFixed(1);
-                                return ' ' + context.label + ': ' + val.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + pct + '%)';
-                            }
-                        }
+                        backgroundColor: 'rgba(18, 28, 42, 0.95)', titleColor: '#e8f0fe', bodyColor: '#7a9cc4', borderColor: '#2a4878', borderWidth: 1, padding: 10,
+                        callbacks: { label: function(context) { var val = context.raw, pct = ((val / totalValue) * 100).toFixed(1); return ' ' + context.label + ': ' + val.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + pct + '%)'; } }
                     }
                 }
             }
@@ -1078,9 +1022,7 @@ async function fetchAll() {
     
     if (btn) btn.textContent = '✅ 同步完成';
     refreshStatus();
-    setTimeout(function() {
-        if (btn) { btn.disabled = false; btn.textContent = '⟳ \u00a0同步最新報價'; }
-    }, 2000);
+    setTimeout(function() { if (btn) { btn.disabled = false; btn.textContent = '⟳ \u00a0同步最新報價'; } }, 2000);
     isFetching = false;
 }
 
@@ -1090,12 +1032,7 @@ var AUTO_SEC = 30;
 var countdown = AUTO_SEC;
 
 setInterval(function() {
-    if (isTradingHours()) {
-        countdown--;
-        if (countdown <= 0) { countdown = AUTO_SEC; fetchAll(); }
-    } else {
-        countdown = AUTO_SEC;
-    }
+    if (isTradingHours()) { countdown--; if (countdown <= 0) { countdown = AUTO_SEC; fetchAll(); } } else { countdown = AUTO_SEC; }
     refreshStatus();
 }, 1000);
 
