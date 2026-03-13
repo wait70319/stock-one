@@ -54,8 +54,8 @@
         h2 { font-size:20px; font-weight:700; letter-spacing:0.02em; }
         .header-sub { color:var(--text-secondary); font-size:12px; margin-top:2px; }
         .header-right {
-            display:flex; flex-direction:column; align-items:flex-end; gap:8px;
-            width:100%; max-width:480px;
+            display:flex; flex-direction:column; align-items:flex-end; gap:12px;
+            width:100%; max-width:540px;
         }
         
         /* ── 新增股票與整理按鈕 ── */
@@ -78,6 +78,43 @@
             border:1px solid var(--border-accent) !important; box-shadow:none !important;
         }
         .btn-sort:hover { background:var(--bg-section) !important; color:#fff !important; transform:none !important; }
+
+        /* ── 操作動作列 (同步與匯出/匯入) ── */
+        .sync-row {
+            display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; width: 100%;
+        }
+        .data-mgmt { display:flex; gap:6px; align-items:center; }
+        .data-mgmt button {
+            background: var(--bg-section); border: 1px solid var(--border-accent);
+            color: var(--text-secondary); padding: 9px 12px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .data-mgmt button:hover { background: var(--bg-input); color: #fff; transform: translateY(-1px); }
+
+        /* ── 狀態列 ── */
+        #statusBar {
+            display:flex; align-items:center; gap:6px;
+            font-family:'JetBrains Mono',monospace; font-size:11px;
+            color:var(--text-muted); transition:color 0.3s;
+        }
+        .dot {
+            width:7px; height:7px; border-radius:50%;
+            background:var(--text-muted); flex-shrink:0; transition:all 0.3s;
+        }
+        #statusBar.trading { color:#00d68f; }
+        #statusBar.trading .dot { background:#00d68f; box-shadow:0 0 6px #00d68f; animation:pulse 1.5s infinite; }
+        #statusBar.soon { color:var(--accent-blue); }
+        #statusBar.soon .dot { background:var(--accent-blue); }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .btn-update {
+            background:linear-gradient(135deg,#1a5fc8,#2d8fff);
+            color:#fff; border:none; padding:10px 20px; border-radius:8px;
+            cursor:pointer; font-size:14px; font-weight:700;
+            font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em;
+            transition:all 0.2s; box-shadow:0 4px 16px rgba(45,143,255,0.3);
+        }
+        .btn-update:hover { transform:translateY(-1px); }
+        .btn-update:disabled { background:#1a2740; color:var(--text-muted); cursor:not-allowed; box-shadow:none; transform:none; }
         
         /* ── 群組切換頁籤 (Tabs) ── */
         .group-tabs {
@@ -107,31 +144,6 @@
             box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border-color: transparent;
         }
 
-        /* ── 狀態列 ── */
-        #statusBar {
-            display:flex; align-items:center; gap:6px;
-            font-family:'JetBrains Mono',monospace; font-size:11px;
-            color:var(--text-muted); transition:color 0.3s;
-        }
-        .dot {
-            width:7px; height:7px; border-radius:50%;
-            background:var(--text-muted); flex-shrink:0; transition:all 0.3s;
-        }
-        #statusBar.trading { color:#00d68f; }
-        #statusBar.trading .dot { background:#00d68f; box-shadow:0 0 6px #00d68f; animation:pulse 1.5s infinite; }
-        #statusBar.soon { color:var(--accent-blue); }
-        #statusBar.soon .dot { background:var(--accent-blue); }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .btn-update {
-            background:linear-gradient(135deg,#1a5fc8,#2d8fff);
-            color:#fff; border:none; padding:10px 20px; border-radius:8px;
-            cursor:pointer; font-size:14px; font-weight:700;
-            font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em;
-            transition:all 0.2s; box-shadow:0 4px 16px rgba(45,143,255,0.3);
-        }
-        .btn-update:hover { transform:translateY(-1px); }
-        .btn-update:disabled { background:#1a2740; color:var(--text-muted); cursor:not-allowed; box-shadow:none; transform:none; }
-        
         /* ── 刪除按鈕 ── */
         .btn-delete {
             position:absolute; top:10px; right:10px;
@@ -330,15 +342,6 @@
         .footer-bar { display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:10px; }
         .note { font-size:11px; color:var(--text-muted); }
         #proxyStatus { font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
-        
-        /* 資料管理按鈕 (匯出/匯入) */
-        .data-mgmt { display:flex; gap:8px; align-items:center; }
-        .data-mgmt button {
-            background: var(--bg-section); border: 1px solid var(--border-accent);
-            color: var(--text-secondary); padding: 6px 12px; border-radius: 6px;
-            font-size: 12px; cursor: pointer; transition: all 0.2s;
-        }
-        .data-mgmt button:hover { background: var(--border-accent); color: #fff; }
 
         @media (max-width:640px) {
             .data-grid { grid-template-columns:repeat(3,1fr); }
@@ -351,6 +354,7 @@
             .port-grid { grid-template-columns: repeat(2, 1fr); }
             .header-right { align-items: flex-start; }
             .add-stock-row { justify-content: flex-start; }
+            .sync-row { justify-content: flex-start; }
         }
     </style>
 </head>
@@ -371,8 +375,14 @@
                 <button onclick="addNewStock()">+ 新增自選</button>
                 <button class="btn-sort" onclick="sortStocksByGroup()" title="依群組與代碼重新排列">🗂️ 整理</button>
             </div>
-            <div id="statusBar"><span class="dot"></span><span id="statusTxt">計算中…</span></div>
-            <button id="updateBtn" class="btn-update" onclick="manualRefresh()">⟳ &nbsp;同步最新報價</button>
+            <div class="sync-row">
+                <div id="statusBar"><span class="dot"></span><span id="statusTxt">計算中…</span></div>
+                <div class="data-mgmt">
+                    <button onclick="exportData()" title="將設定與持股匯出為備份檔">💾 匯出</button>
+                    <button onclick="importData()" title="從備份檔還原設定">📂 匯入</button>
+                </div>
+                <button id="updateBtn" class="btn-update" onclick="manualRefresh()">⟳ &nbsp;同步最新報價</button>
+            </div>
         </div>
     </div>
     
@@ -394,10 +404,6 @@
     
     <div class="footer-bar">
         <div class="note">Yahoo Finance · Cloudflare Worker · 開盤 09:00–13:50 每 30 秒自動更新</div>
-        <div class="data-mgmt">
-            <button onclick="exportData()" title="將所有設定匯出為檔案">💾 匯出備份</button>
-            <button onclick="importData()" title="從備份檔案匯入設定">📂 匯入資料</button>
-        </div>
         <div id="proxyStatus"></div>
     </div>
 </div>
