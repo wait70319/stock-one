@@ -59,17 +59,14 @@
         }
         
         /* ── 新增股票與整理按鈕 ── */
-        .add-stock-row {
-            display:flex; gap:8px; width:100%; justify-content:flex-end; flex-wrap:wrap;
-        }
+        .add-stock-row { display:flex; gap:8px; width:100%; justify-content:flex-end; flex-wrap:wrap; }
         .add-stock-row input {
             background:var(--bg-input); border:1px solid var(--border-accent);
             color:var(--accent-blue); padding:9px 12px; border-radius:8px;
             font-family:'JetBrains Mono',monospace; font-size:13px;
         }
         .add-stock-row button {
-            background:linear-gradient(135deg,#1a5fc8,#2d8fff);
-            color:#fff; border:none; padding:9px 16px; border-radius:8px;
+            background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:9px 16px; border-radius:8px;
             cursor:pointer; font-weight:700; font-size:13px; transition:all 0.2s;
         }
         .add-stock-row button:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(45,127,255,0.3); }
@@ -79,10 +76,8 @@
         }
         .btn-sort:hover { background:var(--bg-section) !important; color:#fff !important; transform:none !important; }
 
-        /* ── 操作動作列 (同步與匯出/匯入) ── */
-        .sync-row {
-            display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; width: 100%;
-        }
+        /* ── 操作動作列 ── */
+        .sync-row { display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; width: 100%; }
         .data-mgmt { display:flex; gap:6px; align-items:center; }
         .data-mgmt button {
             background: var(--bg-section); border: 1px solid var(--border-accent);
@@ -92,243 +87,112 @@
         .data-mgmt button:hover { background: var(--bg-input); color: #fff; transform: translateY(-1px); }
 
         /* ── 狀態列 ── */
-        #statusBar {
-            display:flex; align-items:center; gap:6px;
-            font-family:'JetBrains Mono',monospace; font-size:11px;
-            color:var(--text-muted); transition:color 0.3s;
-        }
-        .dot {
-            width:7px; height:7px; border-radius:50%;
-            background:var(--text-muted); flex-shrink:0; transition:all 0.3s;
-        }
-        #statusBar.trading { color:#00d68f; }
-        #statusBar.trading .dot { background:#00d68f; box-shadow:0 0 6px #00d68f; animation:pulse 1.5s infinite; }
-        #statusBar.soon { color:var(--accent-blue); }
-        #statusBar.soon .dot { background:var(--accent-blue); }
+        #statusBar { display:flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-muted); transition:color 0.3s; }
+        .dot { width:7px; height:7px; border-radius:50%; background:var(--text-muted); flex-shrink:0; transition:all 0.3s; }
+        #statusBar.trading { color:#00d68f; } #statusBar.trading .dot { background:#00d68f; box-shadow:0 0 6px #00d68f; animation:pulse 1.5s infinite; }
+        #statusBar.soon { color:var(--accent-blue); } #statusBar.soon .dot { background:var(--accent-blue); }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
         .btn-update {
-            background:linear-gradient(135deg,#1a5fc8,#2d8fff);
-            color:#fff; border:none; padding:10px 20px; border-radius:8px;
-            cursor:pointer; font-size:14px; font-weight:700;
-            font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em;
+            background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:10px 20px; border-radius:8px;
+            cursor:pointer; font-size:14px; font-weight:700; font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em;
             transition:all 0.2s; box-shadow:0 4px 16px rgba(45,143,255,0.3);
         }
         .btn-update:hover { transform:translateY(-1px); }
         .btn-update:disabled { background:#1a2740; color:var(--text-muted); cursor:not-allowed; box-shadow:none; transform:none; }
         
         /* ── 群組切換頁籤 (Tabs) ── */
-        .group-tabs {
-            display: flex; gap: 8px; flex-wrap: wrap; width: 100%;
-            margin-bottom: 20px; padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
+        .group-tabs { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
         .group-tab {
-            background: var(--bg-section); border: 1px solid var(--border-accent);
-            color: var(--text-secondary); padding: 8px 16px; border-radius: 8px;
-            cursor: pointer; font-weight: 700; font-size: 13px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-section); border: 1px solid var(--border-accent); color: var(--text-secondary); padding: 8px 16px; border-radius: 8px;
+            cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .group-tab:hover {
-            background: var(--bg-input); color: var(--text-primary);
-            transform: translateY(-1px);
-        }
-        .group-tab.active {
-            background: linear-gradient(135deg, #1a5fc8, #2d8fff);
-            color: #fff; border-color: transparent;
-            box-shadow: 0 4px 12px rgba(45, 127, 255, 0.3);
-        }
+        .group-tab:hover { background: var(--bg-input); color: var(--text-primary); transform: translateY(-1px); }
+        .group-tab.active { background: linear-gradient(135deg, #1a5fc8, #2d8fff); color: #fff; border-color: transparent; box-shadow: 0 4px 12px rgba(45, 127, 255, 0.3); }
         .group-tab.tab-portfolio { border-color:var(--accent-gold); color:var(--accent-gold); }
-        .group-tab.tab-portfolio.active {
-            background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border-color: transparent;
-        }
+        .group-tab.tab-portfolio.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border-color: transparent; }
 
         /* ── 刪除按鈕 ── */
         .btn-delete {
-            position:absolute; top:10px; right:10px;
-            background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4);
-            color:#f87171; border-radius:6px; width:26px; height:26px;
-            cursor:pointer; font-size:14px; line-height:1;
-            display:flex; align-items:center; justify-content:center;
-            transition:all 0.2s; opacity:0; z-index: 10;
+            position:absolute; top:10px; right:10px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#f87171; border-radius:6px; width:26px; height:26px;
+            cursor:pointer; font-size:14px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all 0.2s; opacity:0; z-index: 10;
         }
-        .card:hover .btn-delete { opacity:1; }
+        .card:hover .btn-delete, .port-card:hover .btn-delete { opacity:1; }
         .btn-delete:hover { background:rgba(239,68,68,0.35); color:#fff; }
-        .port-card:hover .btn-delete { opacity:1; }
         
         /* ── 分類標題 ── */
-        .group-header {
-            font-size:11px; font-weight:700; letter-spacing:0.14em;
-            text-transform:uppercase; color:var(--text-secondary);
-            margin:10px 0 14px; padding:5px 0 5px 10px;
-            border-left:3px solid var(--border-accent);
-        }
+        .group-header { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-secondary); margin:10px 0 14px; padding:5px 0 5px 10px; border-left:3px solid var(--border-accent); }
         
         /* ── Card (共用) ── */
-        .card {
-            background:var(--bg-card); border-radius:14px;
-            border:1px solid var(--border-accent); border-left:4px solid var(--border-accent);
-            margin-bottom:14px; overflow:hidden; position:relative;
-            box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-            transition:border-left-color 0.35s;
-        }
-        .card.up-card { border-left-color:var(--up); }
-        .card.down-card { border-left-color:var(--down); }
-        
-        /* ── 看板 Card Top ── */
-        .card-top {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:18px 20px 14px;
-            background:linear-gradient(180deg,rgba(30,60,100,0.3) 0%,transparent 100%);
-            border-bottom:1px solid var(--border);
-        }
+        .card { background:var(--bg-card); border-radius:14px; border:1px solid var(--border-accent); border-left:4px solid var(--border-accent); margin-bottom:14px; overflow:hidden; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04); transition:border-left-color 0.35s; }
+        .card.up-card { border-left-color:var(--up); } .card.down-card { border-left-color:var(--down); }
+        .card-top { display:flex; justify-content:space-between; align-items:center; padding:18px 20px 14px; background:linear-gradient(180deg,rgba(30,60,100,0.3) 0%,transparent 100%); border-bottom:1px solid var(--border); }
         .stock-info { display:flex; flex-direction:column; gap:5px; }
         .stock-name { font-size:20px; font-weight:900; letter-spacing:0.04em; }
         .stock-symbol { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-        .symbol-label {
-            background:var(--bg-input); border:1px solid var(--border-accent);
-            border-radius:4px; padding:2px 7px; font-size:10px; color:var(--text-secondary);
-        }
-        .stock-symbol input {
-            background:var(--bg-input); border:1px solid var(--border-accent);
-            color:var(--accent-blue); font-size:12px;
-            font-family:'JetBrains Mono',monospace;
-            padding:3px 8px; border-radius:5px;
-        }
+        .symbol-label { background:var(--bg-input); border:1px solid var(--border-accent); border-radius:4px; padding:2px 7px; font-size:10px; color:var(--text-secondary); }
+        .stock-symbol input { background:var(--bg-input); border:1px solid var(--border-accent); color:var(--accent-blue); font-size:12px; font-family:'JetBrains Mono',monospace; padding:3px 8px; border-radius:5px; }
         .stock-symbol input:focus { outline:none; border-color:var(--accent-blue); }
         
         /* ── Price ── */
         .price-info { text-align:right; }
-        .current-price {
-            font-family:'JetBrains Mono',monospace;
-            font-size:28px; font-weight:700; letter-spacing:-0.02em; line-height:1;
-        }
-        .current-price.up { color:var(--up); }
-        .current-price.down { color:var(--down); }
-        .price-change {
-            font-family:'JetBrains Mono',monospace;
-            font-size:13px; margin-top:5px; padding:3px 9px;
-            border-radius:6px; display:inline-block; font-weight:600;
-        }
-        .price-change.up { background:var(--up-bg); color:var(--up); }
-        .price-change.down { background:var(--down-bg); color:var(--down); }
-        .vol-info { font-size:11px; color:var(--text-muted); margin-top:5px; }
-        .vol-info span { color:var(--text-secondary); }
-        .data-time { font-size:10px; color:var(--text-muted); margin-top:3px; font-family:'JetBrains Mono',monospace; }
-        .data-time.stale { color:#e07b00; }
-        .error-text { color:#ff9000 !important; font-size:14px !important; }
-        .loading-text { color:var(--text-muted) !important; font-size:14px !important; }
+        .current-price { font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; letter-spacing:-0.02em; line-height:1; }
+        .current-price.up { color:var(--up); } .current-price.down { color:var(--down); }
+        .price-change { font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:5px; padding:3px 9px; border-radius:6px; display:inline-block; font-weight:600; }
+        .price-change.up { background:var(--up-bg); color:var(--up); } .price-change.down { background:var(--down-bg); color:var(--down); }
+        .vol-info { font-size:11px; color:var(--text-muted); margin-top:5px; } .vol-info span { color:var(--text-secondary); }
+        .data-time { font-size:10px; color:var(--text-muted); margin-top:3px; font-family:'JetBrains Mono',monospace; } .data-time.stale { color:#e07b00; }
+        .error-text { color:#ff9000 !important; font-size:14px !important; } .loading-text { color:var(--text-muted) !important; font-size:14px !important; }
         
         /* ── Chart ── */
-        .chart-container { width:100%; height:100px; background:rgba(8,18,30,0.5); }
-        .chart-container canvas { display:block; }
+        .chart-container { width:100%; height:100px; background:rgba(8,18,30,0.5); } .chart-container canvas { display:block; }
         
         /* ── Inputs ── */
-        .calc-inputs {
-            display:flex; flex-wrap:wrap; gap:14px; padding:16px 20px;
-            background:var(--bg-section);
-            border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-            align-items:flex-end;
-        }
-        .input-group { display:flex; flex-direction:column; gap:5px; }
-        .input-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
-        .input-group input {
-            background:var(--bg-input); border:1px solid var(--border-accent);
-            color:var(--text-primary); padding:7px 10px; border-radius:7px;
-            font-size:14px; font-family:'JetBrains Mono',monospace;
-            width:105px; text-align:center; font-weight:600;
-        }
-        .input-group input:focus { outline:none; border-color:var(--accent-blue); box-shadow:0 0 0 3px rgba(77,159,255,0.15); }
-        .input-group input::placeholder { color:var(--text-muted); }
-        .result-group { display:flex; flex-direction:column; gap:5px; margin-left:auto; text-align:right; }
-        .result-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
-        .result-val { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; }
-        .up { color:var(--up) !important; }
-        .down { color:var(--down) !important; }
+        .calc-inputs { display:flex; flex-wrap:wrap; gap:14px; padding:16px 20px; background:var(--bg-section); border-top:1px solid var(--border); border-bottom:1px solid var(--border); align-items:flex-end; }
+        .input-group { display:flex; flex-direction:column; gap:5px; } .input-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
+        .input-group input { background:var(--bg-input); border:1px solid var(--border-accent); color:var(--text-primary); padding:7px 10px; border-radius:7px; font-size:14px; font-family:'JetBrains Mono',monospace; width:105px; text-align:center; font-weight:600; }
+        .input-group input:focus { outline:none; border-color:var(--accent-blue); box-shadow:0 0 0 3px rgba(77,159,255,0.15); } .input-group input::placeholder { color:var(--text-muted); }
+        .result-group { display:flex; flex-direction:column; gap:5px; margin-left:auto; text-align:right; } .result-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
+        .result-val { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; } .up { color:var(--up) !important; } .down { color:var(--down) !important; }
         
         /* ── Grid ── */
-        .grid-section { padding:14px 20px; }
-        .grid-section + .grid-section { padding-top:4px; }
-        .grid-title {
-            font-size:10px; color:var(--text-secondary); font-weight:700;
-            letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;
-            display:flex; align-items:center; gap:8px;
-        }
+        .grid-section { padding:14px 20px; } .grid-section + .grid-section { padding-top:4px; }
+        .grid-title { font-size:10px; color:var(--text-secondary); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
         .grid-title::after { content:''; flex:1; height:1px; background:var(--border); }
-        .data-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:7px; }
-        .data-grid-fib { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
-        .grid-item { border-radius:8px; padding:9px 5px; text-align:center; transition:transform 0.15s; }
-        .grid-item:hover { transform:translateY(-1px); }
-        .item-label { font-size:10px; margin-bottom:4px; font-family:'JetBrains Mono',monospace; }
-        .item-value { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
-        .grid-item.drop-5  { background:rgba(56,189,248,.10);  border:1px solid rgba(56,189,248,.45);  border-left:3px solid #38bdf8; }
-        .grid-item.drop-5  .item-label{color:#7dd3fc} .grid-item.drop-5  .item-value{color:#38bdf8}
-        .grid-item.drop-10 { background:rgba(99,210,160,.10);  border:1px solid rgba(99,210,160,.45);  border-left:3px solid #63d2a0; }
-        .grid-item.drop-10 .item-label{color:#9de8c4} .grid-item.drop-10 .item-value{color:#63d2a0}
-        .grid-item.drop-15 { background:rgba(250,204,21,.10);  border:1px solid rgba(250,204,21,.45);  border-left:3px solid #facc15; }
-        .grid-item.drop-15 .item-label{color:#fde68a} .grid-item.drop-15 .item-value{color:#facc15}
-        .grid-item.drop-20 { background:rgba(251,146,60,.12);  border:1px solid rgba(251,146,60,.50);  border-left:3px solid #fb923c; }
-        .grid-item.drop-20 .item-label{color:#fdba74} .grid-item.drop-20 .item-value{color:#fb923c}
-        .grid-item.drop-25 { background:rgba(248,113,113,.12); border:1px solid rgba(248,113,113,.50); border-left:3px solid #f87171; }
-        .grid-item.drop-25 .item-label{color:#fca5a5} .grid-item.drop-25 .item-value{color:#f87171}
-        .grid-item.drop-30 { background:rgba(239,68,68,.16);   border:1px solid rgba(239,68,68,.60);   border-left:3px solid #ef4444; }
-        .grid-item.drop-30 .item-label{color:#fca5a5} .grid-item.drop-30 .item-value{color:#ef4444;font-size:14px}
-        .grid-item.fib-236 { background:rgba(167,139,250,.10); border:1px solid rgba(167,139,250,.40); border-left:3px solid #a78bfa; }
-        .grid-item.fib-236 .item-label{color:#c4b5fd} .grid-item.fib-236 .item-value{color:#a78bfa}
-        .grid-item.fib-382 { background:rgba(139,92,246,.12);  border:1px solid rgba(139,92,246,.50);  border-left:3px solid #8b5cf6; }
-        .grid-item.fib-382 .item-label{color:#c4b5fd} .grid-item.fib-382 .item-value{color:#8b5cf6}
-        .grid-item.fib-500 { background:rgba(109,40,217,.16);  border:1px solid rgba(124,58,237,.55);  border-left:3px solid #7c3aed; }
-        .grid-item.fib-500 .item-label{color:#c4b5fd} .grid-item.fib-500 .item-value{color:#c084fc}
-        .grid-item.fib-618 { background:rgba(88,28,135,.22);   border:1px solid rgba(168,85,247,.65);  border-left:3px solid #a855f7; }
-        .grid-item.fib-618 .item-label{color:#e9d5ff} .grid-item.fib-618 .item-value{color:#e879f9;font-size:14px}
+        .data-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:7px; } .data-grid-fib { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+        .grid-item { border-radius:8px; padding:9px 5px; text-align:center; transition:transform 0.15s; } .grid-item:hover { transform:translateY(-1px); }
+        .item-label { font-size:10px; margin-bottom:4px; font-family:'JetBrains Mono',monospace; } .item-value { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+        .grid-item.drop-5  { background:rgba(56,189,248,.10);  border:1px solid rgba(56,189,248,.45);  border-left:3px solid #38bdf8; } .grid-item.drop-5  .item-label{color:#7dd3fc} .grid-item.drop-5  .item-value{color:#38bdf8}
+        .grid-item.drop-10 { background:rgba(99,210,160,.10);  border:1px solid rgba(99,210,160,.45);  border-left:3px solid #63d2a0; } .grid-item.drop-10 .item-label{color:#9de8c4} .grid-item.drop-10 .item-value{color:#63d2a0}
+        .grid-item.drop-15 { background:rgba(250,204,21,.10);  border:1px solid rgba(250,204,21,.45);  border-left:3px solid #facc15; } .grid-item.drop-15 .item-label{color:#fde68a} .grid-item.drop-15 .item-value{color:#facc15}
+        .grid-item.drop-20 { background:rgba(251,146,60,.12);  border:1px solid rgba(251,146,60,.50);  border-left:3px solid #fb923c; } .grid-item.drop-20 .item-label{color:#fdba74} .grid-item.drop-20 .item-value{color:#fb923c}
+        .grid-item.drop-25 { background:rgba(248,113,113,.12); border:1px solid rgba(248,113,113,.50); border-left:3px solid #f87171; } .grid-item.drop-25 .item-label{color:#fca5a5} .grid-item.drop-25 .item-value{color:#f87171}
+        .grid-item.drop-30 { background:rgba(239,68,68,.16);   border:1px solid rgba(239,68,68,.60);   border-left:3px solid #ef4444; } .grid-item.drop-30 .item-label{color:#fca5a5} .grid-item.drop-30 .item-value{color:#ef4444;font-size:14px}
+        .grid-item.fib-236 { background:rgba(167,139,250,.10); border:1px solid rgba(167,139,250,.40); border-left:3px solid #a78bfa; } .grid-item.fib-236 .item-label{color:#c4b5fd} .grid-item.fib-236 .item-value{color:#a78bfa}
+        .grid-item.fib-382 { background:rgba(139,92,246,.12);  border:1px solid rgba(139,92,246,.50);  border-left:3px solid #8b5cf6; } .grid-item.fib-382 .item-label{color:#c4b5fd} .grid-item.fib-382 .item-value{color:#8b5cf6}
+        .grid-item.fib-500 { background:rgba(109,40,217,.16);  border:1px solid rgba(124,58,237,.55);  border-left:3px solid #7c3aed; } .grid-item.fib-500 .item-label{color:#c4b5fd} .grid-item.fib-500 .item-value{color:#c084fc}
+        .grid-item.fib-618 { background:rgba(88,28,135,.22);   border:1px solid rgba(168,85,247,.65);  border-left:3px solid #a855f7; } .grid-item.fib-618 .item-label{color:#e9d5ff} .grid-item.fib-618 .item-value{color:#e879f9;font-size:14px}
         .grid-item.hit { outline:2px solid #facc15; outline-offset:-1px; }
-        .hit-star {
-            display:block; font-size:14px; line-height:1; margin-bottom:2px;
-            color:#facc15; filter:drop-shadow(0 0 4px rgba(250,204,21,0.8));
-        }
+        .hit-star { display:block; font-size:14px; line-height:1; margin-bottom:2px; color:#facc15; filter:drop-shadow(0 0 4px rgba(250,204,21,0.8)); }
 
         /* ── 持股專屬 UI (Portfolio) ── */
-        .port-summary-box {
-            background: linear-gradient(145deg, var(--bg-card) 0%, #162032 100%);
-            border: 1px solid var(--border-accent); border-radius: 14px;
-            padding: 24px; margin-bottom: 24px;
-            display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: space-around;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        .port-metric { text-align: center; }
-        .port-metric .label { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; letter-spacing: 0.05em; }
+        .port-summary-box { background: linear-gradient(145deg, var(--bg-card) 0%, #162032 100%); border: 1px solid var(--border-accent); border-radius: 14px; padding: 24px; margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: space-around; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .port-metric { text-align: center; } .port-metric .label { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; letter-spacing: 0.05em; }
         .port-metric .val { font-size: 28px; font-weight: 900; font-family: 'JetBrains Mono', monospace; }
         .port-chart-container { width: 160px; height: 160px; position: relative; }
         
-        .port-form-box {
-            background: var(--bg-section); border: 1px dashed var(--border-accent);
-            border-radius: 12px; padding: 16px; margin-bottom: 20px;
-            display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
-        }
-        .port-form-box input {
-            background: var(--bg-input); border: 1px solid var(--border-accent);
-            color: var(--accent-blue); padding: 9px 12px; border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace; font-size: 14px; width: 130px; flex: 1; min-width: 100px;
-        }
-        .port-form-box button {
-            background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff;
-            border: none; padding: 9px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); transition: transform 0.2s; white-space: nowrap;
-        }
+        .port-form-box { background: var(--bg-section); border: 1px dashed var(--border-accent); border-radius: 12px; padding: 16px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+        .port-form-box input { background: var(--bg-input); border: 1px solid var(--border-accent); color: var(--accent-blue); padding: 9px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 14px; width: 130px; flex: 1; min-width: 100px; }
+        .port-form-box button { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; border: none; padding: 9px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); transition: transform 0.2s; white-space: nowrap; }
         .port-form-box button:hover { transform: translateY(-1px); }
 
-        .port-card {
-            background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-accent);
-            margin-bottom: 12px; position: relative; overflow: hidden;
-            border-left: 4px solid var(--accent-blue);
-        }
-        .port-card.up-card { border-left-color: var(--up); }
-        .port-card.down-card { border-left-color: var(--down); }
+        .port-card { background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-accent); margin-bottom: 12px; position: relative; overflow: hidden; border-left: 4px solid var(--accent-blue); }
+        .port-card.up-card { border-left-color: var(--up); } .port-card.down-card { border-left-color: var(--down); }
         .port-card-inner { padding: 16px 20px; }
         .port-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .port-code { font-size: 20px; font-weight: 900; letter-spacing: 0.05em; }
         
-        .port-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+        /* ✅ 將持股編輯區改成 6 欄 (包含配息與日期) */
+        .port-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; text-align: center; }
         .port-grid > div { background: var(--bg-section); padding: 10px 5px; border-radius: 8px; border: 1px solid var(--border); display:flex; flex-direction:column; justify-content:center; }
         .port-grid .lbl { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
         .port-grid .val { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
@@ -340,14 +204,12 @@
             font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700;
             border-radius: 4px; padding: 2px 0; transition: all 0.2s;
         }
-        .port-grid input:focus, .port-grid input:hover {
-            outline: none; border-color: var(--accent-gold); background: var(--bg-input);
-        }
+        .port-grid input:focus, .port-grid input:hover { outline: none; border-color: var(--accent-gold); background: var(--bg-input); }
+        /* 日期選擇器特別優化 */
+        .port-grid input[type="date"] { font-size: 11px; padding: 3px 1px; letter-spacing: -0.5px; }
+        .port-grid input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.7; cursor: pointer; }
 
-        .port-footer {
-            margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .port-footer { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         
         /* ── Footer ── */
         .footer-bar { display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:10px; }
@@ -355,17 +217,12 @@
         #proxyStatus { font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; }
 
         @media (max-width:640px) {
-            .data-grid { grid-template-columns:repeat(3,1fr); }
-            .data-grid-fib { grid-template-columns:repeat(2,1fr); }
-            .calc-inputs { gap:10px; }
-            .input-group input { width:85px; font-size:13px; }
-            .current-price { font-size:22px; }
+            .data-grid { grid-template-columns:repeat(3,1fr); } .data-grid-fib { grid-template-columns:repeat(2,1fr); }
+            .calc-inputs { gap:10px; } .input-group input { width:85px; font-size:13px; } .current-price { font-size:22px; }
             .card-top, .calc-inputs, .grid-section { padding:14px; }
             .port-summary-box { flex-direction: column; text-align: center; }
-            .port-grid { grid-template-columns: repeat(2, 1fr); }
-            .header-right { align-items: flex-start; }
-            .add-stock-row { justify-content: flex-start; }
-            .sync-row { justify-content: flex-start; }
+            .port-grid { grid-template-columns: repeat(3, 1fr); } /* 手機版變成 3 欄 2 列 */
+            .header-right { align-items: flex-start; } .add-stock-row { justify-content: flex-start; } .sync-row { justify-content: flex-start; }
         }
     </style>
 </head>
@@ -382,681 +239,4 @@
         <div class="header-right" id="header-right-controls">
             <div class="add-stock-row" id="normal-controls">
                 <input id="newGroup" placeholder="群組名稱" value="📊 自選" style="width:105px;">
-                <input id="newCode" placeholder="新增代碼 如 2330" onkeypress="if(event.key==='Enter') addNewStock()" style="width:140px;">
-                <button onclick="addNewStock()">+ 新增自選</button>
-                <button class="btn-sort" onclick="sortStocksByGroup()" title="依設定群組順序與代碼重新排列">🗂️ 整理</button>
-            </div>
-            <div class="sync-row">
-                <div id="statusBar"><span class="dot"></span><span id="statusTxt">計算中…</span></div>
-                <div class="data-mgmt">
-                    <button onclick="exportData()" title="將設定與持股匯出為備份檔">💾 匯出</button>
-                    <button onclick="importData()" title="從備份檔還原設定">📂 匯入</button>
-                </div>
-                <button id="updateBtn" class="btn-update" onclick="manualRefresh()">⟳ &nbsp;同步最新報價</button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="group-tabs-container" class="group-tabs"></div>
-    
-    <div id="cards-container"></div>
-    
-    <div id="portfolio-container" style="display:none; width:100%;">
-        <div id="portfolio-summary-area"></div>
-        <div class="port-form-box">
-            <span style="font-size:13px; color:var(--text-secondary); font-weight:bold;">➕ 買入新持股</span>
-            <input id="pCode" placeholder="代號 (如 2330)" onkeypress="if(event.key==='Enter') document.getElementById('pCost').focus()">
-            <input id="pCost" type="number" step="any" placeholder="平均成本" onkeypress="if(event.key==='Enter') document.getElementById('pShares').focus()">
-            <input id="pShares" type="number" step="any" placeholder="持有股數" onkeypress="if(event.key==='Enter') addPortfolioItem()">
-            <button onclick="addPortfolioItem()">確認新增</button>
-        </div>
-        <div id="portfolio-list-area"></div>
-    </div>
-    
-    <div class="footer-bar">
-        <div class="note">Yahoo Finance · Cloudflare Worker · 開盤 09:00–13:50 每 30 秒自動更新</div>
-        <div id="proxyStatus"></div>
-    </div>
-</div>
-
-<script>
-// ═══════════════════════════════════════════
-// ⚙️ 設定您的 Cloudflare Worker URL
-// ═══════════════════════════════════════════
-var WORKER_URL = 'https://solitary-star-284f.wait70319.workers.dev';
-
-// 全局變數
-var activeGroup = 'ALL'; 
-var portChartInst = null; 
-
-// ═══════════════════════════════════════════
-// 群組排序權重函數 (決定頁籤與整理的順序)
-// ═══════════════════════════════════════════
-function getGroupWeight(g) {
-    if (g.indexOf('自選') !== -1) return 1;
-    if (g.indexOf('台股') !== -1 || g.indexOf('台灣股市') !== -1) return 2;
-    if (g.indexOf('期貨') !== -1) return 3;
-    if (g.indexOf('外匯') !== -1) return 4;
-    return 99; // 其他自訂群組往後排
-}
-
-// ═══════════════════════════════════════════
-// 資料庫初始化：自選股 (stocks) 與 持股 (portfolio)
-// ═══════════════════════════════════════════
-var DEFAULT_STOCKS = [
-    { group:'📊 台灣股市', code:'台灣加權', yahoo:'^TWII', highest:35414.54, low:'26434.94', current:'', dp:2 },
-    { group:'📊 台灣股市', code:'00982A', yahoo:'00982A.TW', highest:16.76, low:'', current:'', dp:2 },
-    { group:'📊 台灣股市', code:'00949', yahoo:'00949.TW', highest:20.88, low:'', current:'', dp:2 },
-    { group:'🛢 商品期貨', code:'黃金期貨 XAU', yahoo:'GC=F', highest:0, low:'', current:'', dp:2 },
-    { group:'💱 外匯', code:'美元/日元', yahoo:'JPY=X', highest:0, low:'', current:'', dp:4 }
-];
-
-var stocks = [];
-try {
-    var saved = JSON.parse(localStorage.getItem('stockDataV4') || '[]');
-    stocks = saved.length > 0 ? saved : DEFAULT_STOCKS;
-} catch(e) { stocks = DEFAULT_STOCKS; }
-
-var portfolio = [];
-try {
-    portfolio = JSON.parse(localStorage.getItem('portfolioDataV1') || '[]');
-} catch(e) { portfolio = []; }
-
-// ═══════════════════════════════════════════
-// 匯出與匯入功能 (Import / Export)
-// ═══════════════════════════════════════════
-function exportData() {
-    var backupData = { stocks: stocks, portfolio: portfolio, exportDate: new Date().toISOString() };
-    var blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = "stock_dashboard_backup_" + new Date().toISOString().slice(0,10) + ".json";
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-
-function importData() {
-    var input = document.createElement('input');
-    input.type = 'file'; input.accept = '.json';
-    input.onchange = function(e) {
-        var file = e.target.files[0];
-        if (!file) return;
-        var reader = new FileReader();
-        reader.onload = function(evt) {
-            try {
-                var data = JSON.parse(evt.target.result);
-                var imported = false;
-                if (data.stocks && Array.isArray(data.stocks)) {
-                    stocks = data.stocks;
-                    localStorage.setItem('stockDataV4', JSON.stringify(stocks));
-                    imported = true;
-                }
-                if (data.portfolio && Array.isArray(data.portfolio)) {
-                    portfolio = data.portfolio;
-                    localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio));
-                    imported = true;
-                }
-                if (imported) {
-                    alert('資料匯入成功！系統將重新載入。');
-                    location.reload(); 
-                } else { alert('匯入失敗：檔案中沒有可用的資料。'); }
-            } catch (err) { alert('匯入失敗：檔案格式不正確或損壞。'); }
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
-
-// ═══════════════════════════════════════════
-// Proxy 建構與時間判定
-// ═══════════════════════════════════════════
-function buildProxies() {
-    var list = [];
-    if (WORKER_URL) {
-        var w = WORKER_URL.replace(/\/$/, '');
-        list.push({ fn: function(u) { return w + '/?url=' + encodeURIComponent(u); }, wrap: false, name: 'CF-Worker' });
-        return list; 
-    }
-    list.push({ fn: function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }, wrap: false, name: 'allorigins-raw' });
-    return list;
-}
-var PROXIES = buildProxies();
-
-function twNow() { return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' })); }
-function isTradingHours() {
-    var tw = twNow(), day = tw.getDay();
-    if (day === 0 || day === 6) return false;
-    var m = tw.getHours() * 60 + tw.getMinutes();
-    return m >= 540 && m <= 830;
-}
-function statusLabel(sec) {
-    if (isTradingHours()) return '開盤中 · ' + sec + 's';
-    var tw = twNow(), day = tw.getDay();
-    var m = tw.getHours() * 60 + tw.getMinutes();
-    if (day === 0 || day === 6) return '休市（週末）';
-    if (m < 540) { var d = 540 - m; return '開盤還有 ' + Math.floor(d/60) + 'h' + (d%60) + 'm'; }
-    return '今日已收盤';
-}
-function refreshStatus() {
-    var bar = document.getElementById('statusBar'), txt = document.getElementById('statusTxt');
-    if (!bar || !txt) return;
-    if (isTradingHours()) {
-        bar.className = countdown <= 5 ? 'soon' : 'trading';
-        txt.textContent = statusLabel(countdown);
-    } else { bar.className = ''; txt.textContent = statusLabel(0); }
-}
-
-// ═══════════════════════════════════════════
-// API 請求核心
-// ═══════════════════════════════════════════
-function proxyFetch(proxy, url, ms) {
-    return new Promise(function(resolve, reject) {
-        var ctrl = new AbortController();
-        var tid  = setTimeout(function() { ctrl.abort(); reject(new Error('timeout')); }, ms);
-        fetch(proxy.fn(url), { signal: ctrl.signal, mode: 'cors', cache: 'no-store' })
-            .then(function(res) {
-                clearTimeout(tid);
-                if (res.status === 429) { reject(new Error('rate-limited')); return; }
-                if (!res.ok) { reject(new Error('HTTP ' + res.status)); return; }
-                return res.json();
-            })
-            .then(function(json) { resolve(json); })
-            .catch(function(e) { clearTimeout(tid); reject(e); });
-    });
-}
-
-async function yahooFetch(sym, offsetIdx) {
-    var ts = Date.now(), proxy = PROXIES[(offsetIdx || 0) % PROXIES.length];
-    var v8url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(sym) + '?interval=5m&range=1d&includePrePost=false&_=' + ts;
-    var v7url = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(sym) + '&_=' + ts;
-
-    try {
-        var json = await proxyFetch(proxy, v8url, 10000);
-        var r = json && json.chart && json.chart.result && json.chart.result[0];
-        if (r && r.meta && r.meta.regularMarketPrice != null) return { type: 'chart', data: r };
-    } catch(e) {}
-    try {
-        var json2 = await proxyFetch(proxy, v7url, 10000);
-        var r2 = json2 && json2.quoteResponse && json2.quoteResponse.result && json2.quoteResponse.result[0];
-        if (r2 && r2.regularMarketPrice != null) return { type: 'quote', data: r2 };
-    } catch(e) {}
-    return null;
-}
-
-// ═══════════════════════════════════════════
-// 走勢圖繪製 (Chart.js)
-// ═══════════════════════════════════════════
-var chartInst = {};
-function drawChart(i, timestamps, prices, prevClose) {
-    var canvas = document.getElementById('chart-' + i);
-    if (!canvas || !canvas.parentElement) return;
-    var cont = canvas.parentElement;
-    var w = cont.clientWidth || 360, h = cont.clientHeight || 100;
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    var ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
-
-    var isUp = prices[prices.length - 1] >= prevClose, mc = isUp ? '#ff4d6d' : '#00d68f';
-    var grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0, isUp ? 'rgba(255,77,109,0.25)' : 'rgba(0,214,143,0.25)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-
-    if (chartInst[i]) { chartInst[i].destroy(); chartInst[i] = null; }
-    chartInst[i] = new Chart(ctx, {
-        type: 'line',
-        data: { labels: timestamps, datasets: [{ data: prices, borderColor: mc, backgroundColor: grad, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, fill: true, tension: 0.1 }] },
-        options: { responsive: false, maintainAspectRatio: false, animation: { duration: 0 }, plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } }, scales: { x: { display: false }, y: { display: false, min: Math.min.apply(null, prices) * 0.999, max: Math.max.apply(null, prices) * 1.001 } }, layout: { padding: 0 } }
-    });
-}
-function applyChart(i, chartData, prevClose) {
-    if (!chartData) return;
-    var allTs = chartData.timestamp || [];
-    var closes = (chartData.indicators && chartData.indicators.quote && chartData.indicators.quote[0]) ? (chartData.indicators.quote[0].close || []) : [];
-    if (!allTs.length || !closes.length) return;
-    var todayStr = new Date(allTs[allTs.length - 1] * 1000).toDateString(), dTs = [], dPs = [];
-    for (var j = 0; j < allTs.length; j++) {
-        if (closes[j] != null && new Date(allTs[j] * 1000).toDateString() === todayStr) { dTs.push(allTs[j]); dPs.push(closes[j]); }
-    }
-    if (dPs.length > 1) drawChart(i, dTs, dPs, prevClose);
-}
-
-// ═══════════════════════════════════════════
-// 資料抓取與 UI 更新
-// ═══════════════════════════════════════════
-var isFetching = false;
-
-async function fetchOne(i) {
-    var stock = stocks[i], sym = stock.yahoo, pEl = document.getElementById('price-' + i), isVisible = (pEl !== null); 
-    var result = await yahooFetch(sym, i);
-    
-    if (!result && /\.TW$/i.test(sym)) {
-        var symTWO = sym.replace(/\.TW$/i, '.TWO');
-        result = await yahooFetch(symTWO, i);
-        if (result) {
-            stocks[i].yahoo = symTWO;
-            if (isVisible) {
-                var symEl = document.getElementById('inp-sym-' + i);
-                if (symEl) symEl.value = symTWO;
-                var tElR = document.getElementById('time-' + i);
-                if (tElR) { tElR.textContent = '🔄 已自動修正為 .TWO'; tElR.className = 'data-time'; }
-            }
-            try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-        }
-    }
-
-    if (!result) return;
-
-    var price, prevClose, volume, mTime, chartData = null;
-    if (result.type === 'chart') {
-        var meta = result.data.meta;
-        price = meta.regularMarketPrice; prevClose = meta.chartPreviousClose || meta.previousClose || price;
-        volume = meta.regularMarketVolume; mTime = meta.regularMarketTime; chartData = result.data;
-        stocks[i].lastChartData = chartData; stocks[i].lastPrevClose = prevClose;
-    } else {
-        price = result.data.regularMarketPrice; prevClose = result.data.regularMarketPreviousClose || price;
-        volume = result.data.regularMarketVolume; mTime = result.data.regularMarketTime;
-        stocks[i].lastPrevClose = prevClose;
-    }
-    stocks[i].current = price;
-
-    if (isVisible) {
-        var diff = price - prevClose, pct = prevClose ? (diff / prevClose) * 100 : 0;
-        var cc = diff > 0 ? 'up' : diff < 0 ? 'down' : '', fd = stock.dp !== undefined ? stock.dp : 2;
-
-        var inpEl = document.getElementById('inp-cur-' + i); if (inpEl) inpEl.value = price;
-        pEl.className = 'current-price ' + cc; pEl.textContent = price.toFixed(fd);
-        
-        var cEl = document.getElementById('chg-' + i);
-        if (cEl) { cEl.textContent = (diff > 0 ? '▲ ' : diff < 0 ? '▼ ' : '') + Math.abs(diff).toFixed(fd) + ' (' + (pct > 0 ? '+' : '') + pct.toFixed(2) + '%)'; cEl.className = 'price-change ' + cc; }
-        
-        var card = pEl.closest('.card');
-        if (card) { card.classList.toggle('up-card', diff > 0); card.classList.toggle('down-card', diff < 0); }
-        
-        var vEl = document.getElementById('vol-' + i); if (vEl && volume != null) vEl.textContent = Number(volume).toLocaleString();
-        
-        calculateAll(i);
-        if (chartData) applyChart(i, chartData, prevClose);
-    }
-}
-
-async function fetchOnePortfolio(i) {
-    var p = portfolio[i], sym = p.yahoo;
-    var result = await yahooFetch(sym, 1000 + i); 
-    if (!result && /\.TW$/i.test(sym)) {
-        var symTWO = sym.replace(/\.TW$/i, '.TWO');
-        result = await yahooFetch(symTWO, 1000 + i);
-        if (result) { portfolio[i].yahoo = symTWO; try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {} }
-    }
-    if (result) {
-        portfolio[i].current = result.type === 'chart' ? result.data.meta.regularMarketPrice : result.data.regularMarketPrice;
-    }
-    if (activeGroup === 'PORTFOLIO') renderPortfolio();
-}
-
-function calculateAll(i) {
-    var high = parseFloat(stocks[i].highest) || 0, low = parseFloat(stocks[i].low) || 0, cur = parseFloat(stocks[i].current);
-    var fd = stocks[i].dp !== undefined ? stocks[i].dp : 2, dEl = document.getElementById('diff-' + i);
-    if (!dEl) return;
-    if (isNaN(cur) || high === 0) { dEl.textContent = '—'; dEl.className = 'result-val'; } else {
-        var d = cur - high, p = (d / high) * 100, s = d > 0 ? '+' : '';
-        dEl.innerHTML = s + d.toFixed(fd) + '&nbsp;(' + s + p.toFixed(2) + '%)';
-        dEl.className = 'result-val ' + (d > 0 ? 'up' : d < 0 ? 'down' : '');
-    }
-    if (high > 0) {
-        [5, 10, 15, 20, 25, 30].forEach(function(p) {
-            var target = high * (1 - p / 100), el = document.getElementById('dp-' + p + '-' + i);
-            if (!el) return;
-            var hit = !isNaN(cur) && cur <= target;
-            el.innerHTML = (hit ? '<span class="hit-star">&#9733;</span>' : '') + target.toFixed(fd);
-            el.closest('.grid-item').classList.toggle('hit', hit);
-        });
-        var range = high - low;
-        [236, 382, 500, 618].forEach(function(f) {
-            var el = document.getElementById('fib-' + f + '-' + i);
-            if (el) el.textContent = (high - range * (f / 1000)).toFixed(fd);
-        });
-    }
-}
-
-// ═══════════════════════════════════════════
-// 互動事件處理
-// ═══════════════════════════════════════════
-function onInputChange(i) {
-    stocks[i].highest = document.getElementById('inp-hi-' + i).value;
-    stocks[i].low = document.getElementById('inp-lo-' + i).value;
-    stocks[i].current = document.getElementById('inp-cur-' + i).value;
-    calculateAll(i); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-}
-function onGroupChange(i) {
-    stocks[i].group = document.getElementById('inp-grp-' + i).value.trim() || '未分類';
-    try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-    render(); 
-}
-function onYahooChange(i) { stocks[i].yahoo = document.getElementById('inp-sym-' + i).value.trim(); fetchOne(i); }
-function deleteStock(i) {
-    if (!confirm('確定刪除「' + stocks[i].code + '」？')) return;
-    if (chartInst[i]) { chartInst[i].destroy(); chartInst[i] = null; }
-    stocks.splice(i, 1); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} render();
-}
-
-function guessYahooCode(raw) {
-    var v = raw.trim().toUpperCase();
-    if (v.indexOf('.') >= 0 || v.indexOf('=') >= 0 || v.charAt(0) === '^') return v;
-    return v.replace(/[^A-Z0-9]/g, '') + '.TW';
-}
-
-function addNewStock() {
-    var grp = document.getElementById('newGroup').value.trim() || '📊 自選';
-    var raw = document.getElementById('newCode').value.trim();
-    if (!raw) return;
-    var yahooCode = guessYahooCode(raw);
-    var cleanCode = raw.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,'').replace(/=.*/g,'');
-    stocks.push({ group:grp, code:cleanCode, yahoo:yahooCode, highest:0, low:'', current:'', dp:2 });
-    activeGroup = grp; 
-    try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-    render(); fetchOne(stocks.length - 1);
-    document.getElementById('newCode').value = '';
-}
-
-function sortStocksByGroup() {
-    if (isFetching) { alert('請等待同步完成後再整理！'); return; }
-    stocks.sort(function(a, b) {
-        var gA = a.group || '', gB = b.group || '';
-        var wA = getGroupWeight(gA), wB = getGroupWeight(gB);
-        if (wA !== wB) return wA - wB;
-        if (gA < gB) return -1; if (gA > gB) return 1;
-        var cA = a.code || '', cB = b.code || '';
-        if (cA < cB) return -1; if (cA > cB) return 1;
-        return 0;
-    });
-    try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-    render();
-}
-
-// ═══════════════════════════════════════════
-// 持股管理專用功能 (Portfolio)
-// ═══════════════════════════════════════════
-function addPortfolioItem() {
-    var codeInput = document.getElementById('pCode'), costInput = document.getElementById('pCost'), sharesInput = document.getElementById('pShares');
-    var rawCode = codeInput.value.trim(), cost = parseFloat(costInput.value), shares = parseFloat(sharesInput.value);
-    
-    if (!rawCode || isNaN(cost) || isNaN(shares) || shares <= 0) { alert("請完整輸入代號、成本與持股數量！"); return; }
-    
-    portfolio.push({
-        code: rawCode.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,''),
-        yahoo: guessYahooCode(rawCode),
-        cost: cost, shares: shares, current: ''
-    });
-    
-    try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-    codeInput.value = ''; costInput.value = ''; sharesInput.value = '';
-    
-    renderPortfolio(); fetchOnePortfolio(portfolio.length - 1);
-}
-
-function deletePortfolio(i) {
-    if (!confirm('確定刪除持股「' + portfolio[i].code + '」？')) return;
-    portfolio.splice(i, 1); try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-    renderPortfolio();
-}
-
-// ✅ 新增：更新現有持股的股數與成本
-function updatePortfolioItem(i, field, value) {
-    var val = parseFloat(value);
-    if (!isNaN(val) && val >= 0) {
-        portfolio[i][field] = val;
-        try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-        renderPortfolio(); // 瞬間重新計算損益與圓餅圖
-    }
-}
-
-// ═══════════════════════════════════════════
-// 渲染畫面：總管與頁籤生成
-// ═══════════════════════════════════════════
-function setGroup(grp) {
-    activeGroup = grp;
-    render();
-}
-
-function render() {
-    var tabsCont = document.getElementById('group-tabs-container');
-    var normCont = document.getElementById('cards-container');
-    var portCont = document.getElementById('portfolio-container');
-    var normCtrl = document.getElementById('normal-controls');
-
-    if (activeGroup === 'PORTFOLIO') {
-        normCont.style.display = 'none';
-        portCont.style.display = 'block';
-        if(normCtrl) normCtrl.style.display = 'none';
-        renderPortfolio();
-    } else {
-        normCont.style.display = 'block';
-        portCont.style.display = 'none';
-        if(normCtrl) normCtrl.style.display = 'flex';
-    }
-    
-    if(tabsCont) {
-        var groups = [];
-        stocks.forEach(function(s) { if (groups.indexOf(s.group) === -1) groups.push(s.group); });
-        
-        groups.sort(function(a, b) {
-            var wA = getGroupWeight(a), wB = getGroupWeight(b);
-            if (wA !== wB) return wA - wB;
-            return a < b ? -1 : (a > b ? 1 : 0);
-        });
-        
-        var html = '';
-        html += '<button class="group-tab tab-portfolio ' + (activeGroup === 'PORTFOLIO' ? 'active' : '') + '" onclick="setGroup(\'PORTFOLIO\')">💼 我的持股</button>';
-        
-        var ziXuanGroup = null;
-        for (var i = 0; i < groups.length; i++) {
-            if (getGroupWeight(groups[i]) === 1) { ziXuanGroup = groups[i]; groups.splice(i, 1); break; }
-        }
-        if (ziXuanGroup) {
-            html += '<button class="group-tab ' + (activeGroup === ziXuanGroup ? 'active' : '') + '" onclick="setGroup(\'' + ziXuanGroup + '\')">' + ziXuanGroup + '</button>';
-        }
-
-        html += '<button class="group-tab ' + (activeGroup === 'ALL' ? 'active' : '') + '" onclick="setGroup(\'ALL\')">🌐 一般看板</button>';
-
-        groups.forEach(function(g) {
-            var isActive = (activeGroup === g) ? 'active' : '';
-            html += '<button class="group-tab ' + isActive + '" onclick="setGroup(\'' + g + '\')">' + g + '</button>';
-        });
-        
-        tabsCont.innerHTML = html;
-    }
-    
-    if (activeGroup !== 'PORTFOLIO') {
-        normCont.innerHTML = '';
-        var displayGroups = [];
-        stocks.forEach(function(s) { if (displayGroups.indexOf(s.group) === -1) displayGroups.push(s.group); });
-        
-        displayGroups.sort(function(a, b) {
-            var wA = getGroupWeight(a), wB = getGroupWeight(b);
-            if (wA !== wB) return wA - wB;
-            return a < b ? -1 : (a > b ? 1 : 0);
-        });
-        
-        displayGroups.forEach(function(g) {
-            if (activeGroup !== 'ALL' && activeGroup !== g) return;
-            normCont.insertAdjacentHTML('beforeend', '<div class="group-header">' + g + '</div>');
-            
-            stocks.forEach(function(s, i) {
-                if (s.group !== g) return;
-                normCont.insertAdjacentHTML('beforeend',
-                    '<div class="card" id="card-' + i + '">' +
-                    '<button class="btn-delete" onclick="deleteStock(' + i + ')" title="刪除">✕</button>' +
-                    '<div class="card-top">' +
-                        '<div class="stock-info">' +
-                            '<span class="stock-name">' + s.code + '</span>' +
-                            '<span class="stock-symbol">' +
-                                '<span class="symbol-label">群組</span>' +
-                                '<input type="text" id="inp-grp-' + i + '" value="' + s.group + '" onchange="onGroupChange(' + i + ')" style="width:85px;">' +
-                                '<span class="symbol-label">Yahoo</span>' +
-                                '<input type="text" id="inp-sym-' + i + '" value="' + s.yahoo + '" onchange="onYahooChange(' + i + ')" style="width:95px;">' +
-                            '</span>' +
-                        '</div>' +
-                        '<div class="price-info">' +
-                            '<div class="current-price loading-text" id="price-' + i + '">讀取中…</div>' +
-                            '<div class="price-change" id="chg-' + i + '"></div>' +
-                            '<div class="vol-info">成交量 <span id="vol-' + i + '">—</span></div>' +
-                            '<div class="data-time" id="time-' + i + '"></div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="chart-container"><canvas id="chart-' + i + '"></canvas></div>' +
-                    '<div class="calc-inputs">' +
-                        '<div class="input-group"><label>目前價格</label><input type="number" id="inp-cur-' + i + '" step="0.0001" value="' + s.current + '" oninput="onInputChange(' + i + ')"></div>' +
-                        '<div class="input-group"><label>波段高點</label><input type="number" id="inp-hi-' + i + '" step="0.0001" value="' + s.highest + '" oninput="onInputChange(' + i + ')"></div>' +
-                        '<div class="input-group"><label>波段低點</label><input type="number" id="inp-lo-' + i + '" step="0.0001" value="' + s.low + '" oninput="onInputChange(' + i + ')" placeholder="選填"></div>' +
-                        '<div class="result-group"><label>距高點差 / 漲跌幅</label><div class="result-val" id="diff-' + i + '">—</div></div>' +
-                    '</div>' +
-                    '<div class="grid-section"><div class="grid-title">回檔目標價</div><div class="data-grid">' +
-                        '<div class="grid-item drop-5"><div class="item-label">−5%</div><div class="item-value" id="dp-5-' + i + '">—</div></div>' +
-                        '<div class="grid-item drop-10"><div class="item-label">−10%</div><div class="item-value" id="dp-10-' + i + '">—</div></div>' +
-                        '<div class="grid-item drop-15"><div class="item-label">−15%</div><div class="item-value" id="dp-15-' + i + '">—</div></div>' +
-                        '<div class="grid-item drop-20"><div class="item-label">−20%</div><div class="item-value" id="dp-20-' + i + '">—</div></div>' +
-                        '<div class="grid-item drop-25"><div class="item-label">−25%</div><div class="item-value" id="dp-25-' + i + '">—</div></div>' +
-                        '<div class="grid-item drop-30"><div class="item-label">−30%</div><div class="item-value" id="dp-30-' + i + '">—</div></div>' +
-                    '</div></div>' +
-                    '<div class="grid-section"><div class="grid-title">斐波那契支撐位</div><div class="data-grid-fib">' +
-                        '<div class="grid-item fib-236"><div class="item-label">0.236</div><div class="item-value" id="fib-236-' + i + '">—</div></div>' +
-                        '<div class="grid-item fib-382"><div class="item-label">0.382</div><div class="item-value" id="fib-382-' + i + '">—</div></div>' +
-                        '<div class="grid-item fib-500"><div class="item-label">0.500</div><div class="item-value" id="fib-500-' + i + '">—</div></div>' +
-                        '<div class="grid-item fib-618"><div class="item-label">0.618</div><div class="item-value" id="fib-618-' + i + '">—</div></div>' +
-                    '</div></div>' +
-                    '</div>'
-                );
-                calculateAll(i);
-                if (s.lastChartData) { setTimeout(function(){ applyChart(i, s.lastChartData, s.lastPrevClose); }, 0); }
-            });
-        });
-    }
-}
-
-// ═══════════════════════════════════════════
-// 渲染畫面：持股專屬視圖 (Portfolio View)
-// ═══════════════════════════════════════════
-function renderPortfolio() {
-    var sumArea = document.getElementById('portfolio-summary-area');
-    var listArea = document.getElementById('portfolio-list-area');
-    if (!sumArea || !listArea) return;
-    
-    var totalCost = 0, totalValue = 0, labels = [], chartData = [];
-    var pieColors = ['#f59e0b', '#4d9fff', '#ff4d6d', '#00d68f', '#a855f7', '#38bdf8', '#c084fc', '#fb923c'];
-
-    var listHtml = portfolio.map(function(p, i) {
-        var cost = parseFloat(p.cost) || 0, shares = parseFloat(p.shares) || 0, cur = parseFloat(p.current);
-        var sumCost = cost * shares, sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
-        var pl = sumVal - sumCost, roi = sumCost > 0 ? (pl / sumCost) * 100 : 0;
-        
-        var cc = pl > 0 ? 'up' : pl < 0 ? 'down' : '', cardCc = pl > 0 ? 'up-card' : pl < 0 ? 'down-card' : '', sign = pl > 0 ? '+' : '';
-
-        totalCost += sumCost; totalValue += sumVal;
-        if (sumVal > 0) { labels.push(p.code); chartData.push(sumVal); }
-
-        // ✅ 將原本靜態的「股數」與「均價」改為直接可編輯的 <input> 標籤
-        return '' +
-        '<div class="port-card ' + cardCc + '">' +
-            '<button class="btn-delete" onclick="deletePortfolio(' + i + ')" title="刪除持股">✕</button>' +
-            '<div class="port-card-inner">' +
-                '<div class="port-title-row">' +
-                    '<div class="port-code">' + p.code + '</div>' +
-                    '<div style="font-size:11px; color:var(--text-secondary)">投入成本: ' + sumCost.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>' +
-                '</div>' +
-                '<div class="port-grid">' +
-                    '<div><div class="lbl">股數</div><input type="number" step="any" value="' + shares + '" onchange="updatePortfolioItem(' + i + ', \'shares\', this.value)" title="可直接修改股數"></div>' +
-                    '<div><div class="lbl">均價</div><input type="number" step="any" value="' + cost + '" onchange="updatePortfolioItem(' + i + ', \'cost\', this.value)" title="可直接修改均價"></div>' +
-                    '<div><div class="lbl">現價</div><div class="val" style="color:var(--accent-blue)">' + (!isNaN(cur) ? cur.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:4}) : '讀取中') + '</div></div>' +
-                    '<div><div class="lbl">目前市值</div><div class="val">' + sumVal.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
-                '</div>' +
-                '<div class="port-footer">' +
-                    '<div style="font-size:12px; color:var(--text-secondary); font-weight:600;">未實現損益</div>' +
-                    '<div class="result-val ' + cc + '">' + sign + pl.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + sign + roi.toFixed(2) + '%)</div>' +
-                '</div>' +
-            '</div>' +
-        '</div>';
-    }).join('');
-    
-    listArea.innerHTML = listHtml || '<div style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">目前沒有任何持股，請從上方新增。</div>';
-
-    var totalPL = totalValue - totalCost, totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0;
-    var tcc = totalPL > 0 ? 'up' : totalPL < 0 ? 'down' : '', tsign = totalPL > 0 ? '+' : '';
-    
-    sumArea.innerHTML = '' +
-    '<div class="port-summary-box">' +
-        '<div class="port-metric"><div class="label">總資產市值</div><div class="val">' + totalValue.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
-        '<div class="port-metric"><div class="label">總未實現損益</div><div class="val ' + tcc + '">' + tsign + totalPL.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
-        '<div class="port-metric"><div class="label">總報酬率</div><div class="val ' + tcc + '">' + tsign + totalROI.toFixed(2) + '%</div></div>' +
-        '<div class="port-chart-container"><canvas id="portPieChart"></canvas></div>' +
-    '</div>';
-
-    if (portChartInst) { portChartInst.destroy(); portChartInst = null; }
-    
-    var canvas = document.getElementById('portPieChart');
-    if (canvas && chartData.length > 0) {
-        var ctx = canvas.getContext('2d');
-        portChartInst = new Chart(ctx, {
-            type: 'doughnut',
-            data: { labels: labels, datasets: [{ data: chartData, backgroundColor: pieColors, borderWidth: 2, borderColor: '#0e1520', hoverOffset: 6 }] },
-            options: {
-                responsive: true, maintainAspectRatio: false, cutout: '65%',
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(18, 28, 42, 0.95)', titleColor: '#e8f0fe', bodyColor: '#7a9cc4', borderColor: '#2a4878', borderWidth: 1, padding: 10,
-                        callbacks: { label: function(context) { var val = context.raw, pct = ((val / totalValue) * 100).toFixed(1); return ' ' + context.label + ': ' + val.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + pct + '%)'; } }
-                    }
-                }
-            }
-        });
-    }
-}
-
-// ═══════════════════════════════════════════
-// 統一調度與自動更新機制 (fetchAll)
-// ═══════════════════════════════════════════
-async function fetchAll() {
-    if (isFetching) return;
-    isFetching = true;
-    var btn = document.getElementById('updateBtn');
-    if (btn) { btn.disabled = true; btn.textContent = '同步中…'; }
-
-    for (let i = 0; i < stocks.length; i++) {
-        await fetchOne(i);
-        await new Promise(resolve => setTimeout(resolve, 200)); 
-    }
-    
-    for (let i = 0; i < portfolio.length; i++) {
-        await fetchOnePortfolio(i);
-        await new Promise(resolve => setTimeout(resolve, 200)); 
-    }
-
-    try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
-    try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-    
-    if (btn) btn.textContent = '✅ 同步完成';
-    refreshStatus();
-    setTimeout(function() { if (btn) { btn.disabled = false; btn.textContent = '⟳ \u00a0同步最新報價'; } }, 2000);
-    isFetching = false;
-}
-
-function manualRefresh() { countdown = AUTO_SEC; fetchAll(); }
-
-var AUTO_SEC = 30;
-var countdown = AUTO_SEC;
-
-setInterval(function() {
-    if (isTradingHours()) { countdown--; if (countdown <= 0) { countdown = AUTO_SEC; fetchAll(); } } else { countdown = AUTO_SEC; }
-    refreshStatus();
-}, 1000);
-
-// ── 系統啟動 ──
-render();
-refreshStatus();
-fetchAll();
-
-</script>
-</body>
-</html>
+                
