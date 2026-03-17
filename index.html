@@ -53,37 +53,20 @@
         }
         h2 { font-size:20px; font-weight:700; letter-spacing:0.02em; }
         .header-sub { color:var(--text-secondary); font-size:12px; margin-top:2px; }
-        .header-right {
-            display:flex; flex-direction:column; align-items:flex-end; gap:12px;
-            width:100%; max-width:540px;
-        }
+        .header-right { display:flex; flex-direction:column; align-items:flex-end; gap:12px; width:100%; max-width:540px; }
         
         /* ── 新增股票與整理按鈕 ── */
         .add-stock-row { display:flex; gap:8px; width:100%; justify-content:flex-end; flex-wrap:wrap; }
-        .add-stock-row input {
-            background:var(--bg-input); border:1px solid var(--border-accent);
-            color:var(--accent-blue); padding:9px 12px; border-radius:8px;
-            font-family:'JetBrains Mono',monospace; font-size:13px;
-        }
-        .add-stock-row button {
-            background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:9px 16px; border-radius:8px;
-            cursor:pointer; font-weight:700; font-size:13px; transition:all 0.2s;
-        }
+        .add-stock-row input { background:var(--bg-input); border:1px solid var(--border-accent); color:var(--accent-blue); padding:9px 12px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:13px; }
+        .add-stock-row button { background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:9px 16px; border-radius:8px; cursor:pointer; font-weight:700; font-size:13px; transition:all 0.2s; }
         .add-stock-row button:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(45,127,255,0.3); }
-        .btn-sort {
-            background:transparent !important; color:var(--text-secondary) !important;
-            border:1px solid var(--border-accent) !important; box-shadow:none !important;
-        }
+        .btn-sort { background:transparent !important; color:var(--text-secondary) !important; border:1px solid var(--border-accent) !important; box-shadow:none !important; }
         .btn-sort:hover { background:var(--bg-section) !important; color:#fff !important; transform:none !important; }
 
         /* ── 操作動作列 ── */
         .sync-row { display: flex; gap: 12px; align-items: center; justify-content: flex-end; flex-wrap: wrap; width: 100%; }
         .data-mgmt { display:flex; gap:6px; align-items:center; }
-        .data-mgmt button {
-            background: var(--bg-section); border: 1px solid var(--border-accent);
-            color: var(--text-secondary); padding: 9px 12px; border-radius: 8px;
-            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-        }
+        .data-mgmt button { background: var(--bg-section); border: 1px solid var(--border-accent); color: var(--text-secondary); padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .data-mgmt button:hover { background: var(--bg-input); color: #fff; transform: translateY(-1px); }
 
         /* ── 狀態列 ── */
@@ -92,48 +75,34 @@
         #statusBar.trading { color:#00d68f; } #statusBar.trading .dot { background:#00d68f; box-shadow:0 0 6px #00d68f; animation:pulse 1.5s infinite; }
         #statusBar.soon { color:var(--accent-blue); } #statusBar.soon .dot { background:var(--accent-blue); }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .btn-update {
-            background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:10px 20px; border-radius:8px;
-            cursor:pointer; font-size:14px; font-weight:700; font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em;
-            transition:all 0.2s; box-shadow:0 4px 16px rgba(45,143,255,0.3);
-        }
+        .btn-update { background:linear-gradient(135deg,#1a5fc8,#2d8fff); color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:700; font-family:'Noto Sans TC',sans-serif; letter-spacing:0.03em; transition:all 0.2s; box-shadow:0 4px 16px rgba(45,143,255,0.3); }
         .btn-update:hover { transform:translateY(-1px); }
         .btn-update:disabled { background:#1a2740; color:var(--text-muted); cursor:not-allowed; box-shadow:none; transform:none; }
         
-        /* ── 群組切換頁籤 (Tabs) ── */
+        /* ── 群組切換頁籤 ── */
         .group-tabs { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-        .group-tab {
-            background: var(--bg-section); border: 1px solid var(--border-accent); color: var(--text-secondary); padding: 8px 16px; border-radius: 8px;
-            cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .group-tab { background: var(--bg-section); border: 1px solid var(--border-accent); color: var(--text-secondary); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .group-tab:hover { background: var(--bg-input); color: var(--text-primary); transform: translateY(-1px); }
         .group-tab.active { background: linear-gradient(135deg, #1a5fc8, #2d8fff); color: #fff; border-color: transparent; box-shadow: 0 4px 12px rgba(45, 127, 255, 0.3); }
         .group-tab.tab-portfolio { border-color:var(--accent-gold); color:var(--accent-gold); }
         .group-tab.tab-portfolio.active { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); border-color: transparent; }
 
         /* ── 刪除按鈕 ── */
-        .btn-delete {
-            position:absolute; top:10px; right:10px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#f87171; border-radius:6px; width:26px; height:26px;
-            cursor:pointer; font-size:14px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all 0.2s; opacity:0; z-index: 10;
-        }
+        .btn-delete { position:absolute; top:10px; right:10px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#f87171; border-radius:6px; width:26px; height:26px; cursor:pointer; font-size:14px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all 0.2s; opacity:0; z-index: 10; }
         .card:hover .btn-delete, .port-card:hover .btn-delete { opacity:1; }
         .btn-delete:hover { background:rgba(239,68,68,0.35); color:#fff; }
         
-        /* ── 分類標題 ── */
-        .group-header { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-secondary); margin:10px 0 14px; padding:5px 0 5px 10px; border-left:3px solid var(--border-accent); }
-        
         /* ── Card (共用) ── */
+        .group-header { font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-secondary); margin:10px 0 14px; padding:5px 0 5px 10px; border-left:3px solid var(--border-accent); }
         .card { background:var(--bg-card); border-radius:14px; border:1px solid var(--border-accent); border-left:4px solid var(--border-accent); margin-bottom:14px; overflow:hidden; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04); transition:border-left-color 0.35s; }
         .card.up-card { border-left-color:var(--up); } .card.down-card { border-left-color:var(--down); }
         .card-top { display:flex; justify-content:space-between; align-items:center; padding:18px 20px 14px; background:linear-gradient(180deg,rgba(30,60,100,0.3) 0%,transparent 100%); border-bottom:1px solid var(--border); }
-        .stock-info { display:flex; flex-direction:column; gap:5px; }
-        .stock-name { font-size:20px; font-weight:900; letter-spacing:0.04em; }
+        .stock-info { display:flex; flex-direction:column; gap:5px; } .stock-name { font-size:20px; font-weight:900; letter-spacing:0.04em; }
         .stock-symbol { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
         .symbol-label { background:var(--bg-input); border:1px solid var(--border-accent); border-radius:4px; padding:2px 7px; font-size:10px; color:var(--text-secondary); }
         .stock-symbol input { background:var(--bg-input); border:1px solid var(--border-accent); color:var(--accent-blue); font-size:12px; font-family:'JetBrains Mono',monospace; padding:3px 8px; border-radius:5px; }
         .stock-symbol input:focus { outline:none; border-color:var(--accent-blue); }
         
-        /* ── Price ── */
         .price-info { text-align:right; }
         .current-price { font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; letter-spacing:-0.02em; line-height:1; }
         .current-price.up { color:var(--up); } .current-price.down { color:var(--down); }
@@ -141,36 +110,33 @@
         .price-change.up { background:var(--up-bg); color:var(--up); } .price-change.down { background:var(--down-bg); color:var(--down); }
         .vol-info { font-size:11px; color:var(--text-muted); margin-top:5px; } .vol-info span { color:var(--text-secondary); }
         .data-time { font-size:10px; color:var(--text-muted); margin-top:3px; font-family:'JetBrains Mono',monospace; } .data-time.stale { color:#e07b00; }
-        .error-text { color:#ff9000 !important; font-size:14px !important; } .loading-text { color:var(--text-muted) !important; font-size:14px !important; }
         
-        /* ── Chart ── */
         .chart-container { width:100%; height:100px; background:rgba(8,18,30,0.5); } .chart-container canvas { display:block; }
         
-        /* ── Inputs ── */
+        /* ── Inputs & Grid (General) ── */
         .calc-inputs { display:flex; flex-wrap:wrap; gap:14px; padding:16px 20px; background:var(--bg-section); border-top:1px solid var(--border); border-bottom:1px solid var(--border); align-items:flex-end; }
         .input-group { display:flex; flex-direction:column; gap:5px; } .input-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
         .input-group input { background:var(--bg-input); border:1px solid var(--border-accent); color:var(--text-primary); padding:7px 10px; border-radius:7px; font-size:14px; font-family:'JetBrains Mono',monospace; width:105px; text-align:center; font-weight:600; }
-        .input-group input:focus { outline:none; border-color:var(--accent-blue); box-shadow:0 0 0 3px rgba(77,159,255,0.15); } .input-group input::placeholder { color:var(--text-muted); }
+        .input-group input:focus { outline:none; border-color:var(--accent-blue); box-shadow:0 0 0 3px rgba(77,159,255,0.15); }
         .result-group { display:flex; flex-direction:column; gap:5px; margin-left:auto; text-align:right; } .result-group label { font-size:10px; color:var(--text-secondary); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; }
         .result-val { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; } .up { color:var(--up) !important; } .down { color:var(--down) !important; }
         
-        /* ── Grid ── */
         .grid-section { padding:14px 20px; } .grid-section + .grid-section { padding-top:4px; }
         .grid-title { font-size:10px; color:var(--text-secondary); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
         .grid-title::after { content:''; flex:1; height:1px; background:var(--border); }
         .data-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:7px; } .data-grid-fib { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
         .grid-item { border-radius:8px; padding:9px 5px; text-align:center; transition:transform 0.15s; } .grid-item:hover { transform:translateY(-1px); }
         .item-label { font-size:10px; margin-bottom:4px; font-family:'JetBrains Mono',monospace; } .item-value { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
-        .grid-item.drop-5  { background:rgba(56,189,248,.10);  border:1px solid rgba(56,189,248,.45);  border-left:3px solid #38bdf8; } .grid-item.drop-5  .item-label{color:#7dd3fc} .grid-item.drop-5  .item-value{color:#38bdf8}
-        .grid-item.drop-10 { background:rgba(99,210,160,.10);  border:1px solid rgba(99,210,160,.45);  border-left:3px solid #63d2a0; } .grid-item.drop-10 .item-label{color:#9de8c4} .grid-item.drop-10 .item-value{color:#63d2a0}
-        .grid-item.drop-15 { background:rgba(250,204,21,.10);  border:1px solid rgba(250,204,21,.45);  border-left:3px solid #facc15; } .grid-item.drop-15 .item-label{color:#fde68a} .grid-item.drop-15 .item-value{color:#facc15}
-        .grid-item.drop-20 { background:rgba(251,146,60,.12);  border:1px solid rgba(251,146,60,.50);  border-left:3px solid #fb923c; } .grid-item.drop-20 .item-label{color:#fdba74} .grid-item.drop-20 .item-value{color:#fb923c}
+        .grid-item.drop-5  { background:rgba(56,189,248,.10); border:1px solid rgba(56,189,248,.45); border-left:3px solid #38bdf8; } .grid-item.drop-5 .item-label{color:#7dd3fc} .grid-item.drop-5 .item-value{color:#38bdf8}
+        .grid-item.drop-10 { background:rgba(99,210,160,.10); border:1px solid rgba(99,210,160,.45); border-left:3px solid #63d2a0; } .grid-item.drop-10 .item-label{color:#9de8c4} .grid-item.drop-10 .item-value{color:#63d2a0}
+        .grid-item.drop-15 { background:rgba(250,204,21,.10); border:1px solid rgba(250,204,21,.45); border-left:3px solid #facc15; } .grid-item.drop-15 .item-label{color:#fde68a} .grid-item.drop-15 .item-value{color:#facc15}
+        .grid-item.drop-20 { background:rgba(251,146,60,.12); border:1px solid rgba(251,146,60,.50); border-left:3px solid #fb923c; } .grid-item.drop-20 .item-label{color:#fdba74} .grid-item.drop-20 .item-value{color:#fb923c}
         .grid-item.drop-25 { background:rgba(248,113,113,.12); border:1px solid rgba(248,113,113,.50); border-left:3px solid #f87171; } .grid-item.drop-25 .item-label{color:#fca5a5} .grid-item.drop-25 .item-value{color:#f87171}
-        .grid-item.drop-30 { background:rgba(239,68,68,.16);   border:1px solid rgba(239,68,68,.60);   border-left:3px solid #ef4444; } .grid-item.drop-30 .item-label{color:#fca5a5} .grid-item.drop-30 .item-value{color:#ef4444;font-size:14px}
+        .grid-item.drop-30 { background:rgba(239,68,68,.16); border:1px solid rgba(239,68,68,.60); border-left:3px solid #ef4444; } .grid-item.drop-30 .item-label{color:#fca5a5} .grid-item.drop-30 .item-value{color:#ef4444;font-size:14px}
         .grid-item.fib-236 { background:rgba(167,139,250,.10); border:1px solid rgba(167,139,250,.40); border-left:3px solid #a78bfa; } .grid-item.fib-236 .item-label{color:#c4b5fd} .grid-item.fib-236 .item-value{color:#a78bfa}
-        .grid-item.fib-382 { background:rgba(139,92,246,.12);  border:1px solid rgba(139,92,246,.50);  border-left:3px solid #8b5cf6; } .grid-item.fib-382 .item-label{color:#c4b5fd} .grid-item.fib-382 .item-value{color:#8b5cf6}
-        .grid-item.fib-500 { background:rgba(109,40,217,.16);  border:1px solid rgba(124,58,237,.55);  border-left:3px solid #7c3aed; } .grid-item.fib-500 .item-label{color:#c4b5fd} .grid-item.fib-500 .item-value{color:#c084fc}
-        .grid-item.fib-618 { background:rgba(88,28,135,.22);   border:1px solid rgba(168,85,247,.65);  border-left:3px solid #a855f7; } .grid-item.fib-618 .item-label{color:#e9d5ff} .grid-item.fib-618 .item-value{color:#e879f9;font-size:14px}
+        .grid-item.fib-382 { background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.50); border-left:3px solid #8b5cf6; } .grid-item.fib-382 .item-label{color:#c4b5fd} .grid-item.fib-382 .item-value{color:#8b5cf6}
+        .grid-item.fib-500 { background:rgba(109,40,217,.16); border:1px solid rgba(124,58,237,.55); border-left:3px solid #7c3aed; } .grid-item.fib-500 .item-label{color:#c4b5fd} .grid-item.fib-500 .item-value{color:#c084fc}
+        .grid-item.fib-618 { background:rgba(88,28,135,.22); border:1px solid rgba(168,85,247,.65); border-left:3px solid #a855f7; } .grid-item.fib-618 .item-label{color:#e9d5ff} .grid-item.fib-618 .item-value{color:#e879f9;font-size:14px}
         .grid-item.hit { outline:2px solid #facc15; outline-offset:-1px; }
         .hit-star { display:block; font-size:14px; line-height:1; margin-bottom:2px; color:#facc15; filter:drop-shadow(0 0 4px rgba(250,204,21,0.8)); }
 
@@ -191,23 +157,28 @@
         .port-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .port-code { font-size: 20px; font-weight: 900; letter-spacing: 0.05em; }
         
-        /* ✅ 將持股編輯區改成 6 欄 (包含配息與日期) */
-        .port-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; text-align: center; }
+        .port-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
         .port-grid > div { background: var(--bg-section); padding: 10px 5px; border-radius: 8px; border: 1px solid var(--border); display:flex; flex-direction:column; justify-content:center; }
         .port-grid .lbl { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
         .port-grid .val { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-        
-        /* 針對持股卡片內的 input 修改樣式 */
-        .port-grid input {
-            background: transparent; border: 1px dashed var(--border-accent);
-            color: var(--text-primary); text-align: center; width: 100%;
-            font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700;
-            border-radius: 4px; padding: 2px 0; transition: all 0.2s;
-        }
+        .port-grid input { background: transparent; border: 1px dashed var(--border-accent); color: var(--text-primary); text-align: center; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; border-radius: 4px; padding: 2px 0; transition: all 0.2s; }
         .port-grid input:focus, .port-grid input:hover { outline: none; border-color: var(--accent-gold); background: var(--bg-input); }
-        /* 日期選擇器特別優化 */
-        .port-grid input[type="date"] { font-size: 11px; padding: 3px 1px; letter-spacing: -0.5px; }
-        .port-grid input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.7; cursor: pointer; }
+
+        /* ── 配息紀錄區塊 ── */
+        .dividend-section { margin-top: 14px; padding: 12px 14px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px dashed var(--border-accent); }
+        .div-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+        .div-header .title { font-size: 12px; color: var(--accent-gold); font-weight: 700; letter-spacing: 0.05em; }
+        .div-inputs { display: flex; gap: 6px; align-items: center; }
+        .div-inputs input { background: var(--bg-input); border: 1px solid var(--border-accent); color: var(--text-primary); font-size: 12px; padding: 5px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
+        .div-inputs input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.7; cursor: pointer; }
+        .div-inputs input:focus { outline: none; border-color: var(--accent-gold); }
+        .div-inputs button { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .div-inputs button:hover { opacity: 0.9; transform: translateY(-1px); }
+        .div-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .div-tag { background: var(--bg-section); border: 1px solid var(--border-accent); padding: 4px 10px; border-radius: 12px; font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; }
+        .div-tag .amt { color: var(--up); font-weight: bold; font-size:12px; }
+        .div-tag .del { color: #f87171; cursor: pointer; font-weight: bold; margin-left:2px;}
+        .div-tag .del:hover { color: #ef4444; }
 
         .port-footer { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         
@@ -221,8 +192,9 @@
             .calc-inputs { gap:10px; } .input-group input { width:85px; font-size:13px; } .current-price { font-size:22px; }
             .card-top, .calc-inputs, .grid-section { padding:14px; }
             .port-summary-box { flex-direction: column; text-align: center; }
-            .port-grid { grid-template-columns: repeat(3, 1fr); } /* 手機版變成 3 欄 2 列 */
+            .port-grid { grid-template-columns: repeat(2, 1fr); } 
             .header-right { align-items: flex-start; } .add-stock-row { justify-content: flex-start; } .sync-row { justify-content: flex-start; }
+            .div-inputs { width: 100%; } .div-inputs input { flex:1; }
         }
     </style>
 </head>
@@ -287,18 +259,18 @@ var activeGroup = 'ALL';
 var portChartInst = null; 
 
 // ═══════════════════════════════════════════
-// 群組排序權重函數 (決定頁籤與整理的順序)
+// 群組排序權重函數
 // ═══════════════════════════════════════════
 function getGroupWeight(g) {
     if (g.indexOf('自選') !== -1) return 1;
     if (g.indexOf('台股') !== -1 || g.indexOf('台灣股市') !== -1) return 2;
     if (g.indexOf('期貨') !== -1) return 3;
     if (g.indexOf('外匯') !== -1) return 4;
-    return 99; // 其他自訂群組往後排
+    return 99;
 }
 
 // ═══════════════════════════════════════════
-// 資料庫初始化：自選股 (stocks) 與 持股 (portfolio)
+// 資料庫初始化
 // ═══════════════════════════════════════════
 var DEFAULT_STOCKS = [
     { group:'📊 台灣股市', code:'台灣加權', yahoo:'^TWII', highest:35414.54, low:'26434.94', current:'', dp:2 },
@@ -317,16 +289,24 @@ try {
 var portfolio = [];
 try {
     portfolio = JSON.parse(localStorage.getItem('portfolioDataV1') || '[]');
+    // 💡 版本升級：若持股舊版資料有單筆 dividend，將其轉入歷年配息陣列中
+    portfolio.forEach(function(p) {
+        if (!p.dividends) p.dividends = [];
+        if (p.dividend && parseFloat(p.dividend) > 0) {
+            p.dividends.push({ date: p.dividendDate || '過去配息', amount: parseFloat(p.dividend) });
+            p.dividend = 0; p.dividendDate = '';
+        }
+    });
 } catch(e) { portfolio = []; }
 
 // ═══════════════════════════════════════════
-// 匯出與匯入功能 (Import / Export)
+// 匯出與匯入功能
 // ═══════════════════════════════════════════
 function exportData() {
     var backupData = { stocks: stocks, portfolio: portfolio, exportDate: new Date().toISOString() };
     var blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a'); a.href = url; a.download = "stock_dashboard_backup_" + new Date().toISOString().slice(0,10) + ".json";
+    var url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url;
+    a.download = "stock_dashboard_backup_" + new Date().toISOString().slice(0,10) + ".json";
     document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
@@ -365,8 +345,7 @@ var PROXIES = buildProxies();
 function twNow() { return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' })); }
 function isTradingHours() {
     var tw = twNow(), day = tw.getDay(), m = tw.getHours() * 60 + tw.getMinutes();
-    if (day === 0 || day === 6) return false;
-    return m >= 540 && m <= 830;
+    if (day === 0 || day === 6) return false; return m >= 540 && m <= 830;
 }
 function statusLabel(sec) {
     if (isTradingHours()) return '開盤中 · ' + sec + 's';
@@ -484,7 +463,7 @@ function calculateAll(i) {
 }
 
 // ═══════════════════════════════════════════
-// 互動事件處理
+// 一般看板互動事件
 // ═══════════════════════════════════════════
 function onInputChange(i) { stocks[i].highest = document.getElementById('inp-hi-' + i).value; stocks[i].low = document.getElementById('inp-lo-' + i).value; stocks[i].current = document.getElementById('inp-cur-' + i).value; calculateAll(i); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} }
 function onGroupChange(i) { stocks[i].group = document.getElementById('inp-grp-' + i).value.trim() || '未分類'; try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} render(); }
@@ -512,24 +491,20 @@ function sortStocksByGroup() {
 }
 
 // ═══════════════════════════════════════════
-// 持股管理專用功能 (Portfolio)
+// 持股管理專用功能 (Portfolio & 歷年配息)
 // ═══════════════════════════════════════════
 function addPortfolioItem() {
     var codeInput = document.getElementById('pCode'), costInput = document.getElementById('pCost'), sharesInput = document.getElementById('pShares');
     var rawCode = codeInput.value.trim(), cost = parseFloat(costInput.value), shares = parseFloat(sharesInput.value);
-    
     if (!rawCode || isNaN(cost) || isNaN(shares) || shares <= 0) { alert("請完整輸入代號、成本與持股數量！"); return; }
     
     portfolio.push({
         code: rawCode.toUpperCase().replace(/\.TWO$/i,'').replace(/\.TW$/i,''),
-        yahoo: guessYahooCode(rawCode),
-        cost: cost, shares: shares, current: '',
-        dividend: 0, dividendDate: '' // 初始化配息資料
+        yahoo: guessYahooCode(rawCode), cost: cost, shares: shares, current: '',
+        dividends: [] // 初始化空配息陣列
     });
-    
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     codeInput.value = ''; costInput.value = ''; sharesInput.value = '';
-    
     renderPortfolio(); fetchOnePortfolio(portfolio.length - 1);
 }
 
@@ -539,20 +514,38 @@ function deletePortfolio(i) {
     renderPortfolio();
 }
 
-// ✅ 升級：處理股數、成本，以及「配息」與「日期」的編輯
 function updatePortfolioItem(i, field, value) {
-    if (field === 'dividendDate') {
-        portfolio[i][field] = value;
-    } else {
-        var val = parseFloat(value);
-        if (!isNaN(val) && val >= 0) {
-            portfolio[i][field] = val;
-        } else if (field === 'dividend' && isNaN(val)) {
-            portfolio[i][field] = 0; // 允許清空配息金額
-        }
+    var val = parseFloat(value);
+    if (!isNaN(val) && val >= 0) {
+        portfolio[i][field] = val;
+        try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
+        renderPortfolio();
     }
+}
+
+// 📌 新增單筆配息紀錄
+function addDividend(i) {
+    var dDate = document.getElementById('divDate-' + i).value;
+    var dAmt = parseFloat(document.getElementById('divAmt-' + i).value);
+    if (!dDate) dDate = new Date().toISOString().slice(0,10); // 若未選日期預設帶入今天
+    if (isNaN(dAmt) || dAmt <= 0) { alert('請輸入正確的每股配息金額'); return; }
+    
+    if (!portfolio[i].dividends) portfolio[i].dividends = [];
+    portfolio[i].dividends.push({ date: dDate, amount: dAmt });
+    
+    // 依日期從新到舊排序
+    portfolio[i].dividends.sort(function(a,b) { return a.date > b.date ? -1 : (a.date < b.date ? 1 : 0); });
+    
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
-    renderPortfolio(); // 瞬間重新計算損益與圓餅圖
+    renderPortfolio();
+}
+
+// 📌 刪除單筆配息紀錄
+function delDividend(i, j) {
+    if (!confirm('確定刪除這筆配息紀錄？')) return;
+    portfolio[i].dividends.splice(j, 1);
+    try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
+    renderPortfolio();
 }
 
 // ═══════════════════════════════════════════
@@ -608,7 +601,7 @@ function render() {
 }
 
 // ═══════════════════════════════════════════
-// 渲染畫面：持股專屬視圖 (Portfolio View)
+// 渲染畫面：持股專屬視圖 (含歷年配息加總)
 // ═══════════════════════════════════════════
 function renderPortfolio() {
     var sumArea = document.getElementById('portfolio-summary-area');
@@ -621,25 +614,33 @@ function renderPortfolio() {
 
     var listHtml = portfolio.map(function(p, i) {
         var cost = parseFloat(p.cost) || 0, shares = parseFloat(p.shares) || 0, cur = parseFloat(p.current);
-        var divPerShare = parseFloat(p.dividend) || 0, divDate = p.dividendDate || '';
+        var divs = p.dividends || [];
         
-        var sumCost = cost * shares, sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
-        var pl = sumVal - sumCost;
-        var divTotalForStock = divPerShare * shares;
+        // 計算這檔股票歷年「總配息金額 (每股)」
+        var totalDivPerShare = divs.reduce(function(sum, d) { return sum + parseFloat(d.amount); }, 0);
+        var divTotalForStock = totalDivPerShare * shares; // 這檔獲得的現金總和
+        
+        var sumCost = cost * shares;
+        var sumVal = !isNaN(cur) ? (cur * shares) : sumCost;
+        
+        var pl = sumVal - sumCost; // 純價差損益
         var plWithDiv = pl + divTotalForStock; // 含息損益
         var roi = sumCost > 0 ? (pl / sumCost) * 100 : 0;
-        var roiWithDiv = sumCost > 0 ? (plWithDiv / sumCost) * 100 : 0; // 含息報酬率
+        var roiWithDiv = sumCost > 0 ? (plWithDiv / sumCost) * 100 : 0;
         
         var cc = pl > 0 ? 'up' : pl < 0 ? 'down' : '';
         var cardCc = plWithDiv > 0 ? 'up-card' : plWithDiv < 0 ? 'down-card' : '';
-        var sign = pl > 0 ? '+' : '';
-        var signTotal = plWithDiv > 0 ? '+' : '';
+        var sign = pl > 0 ? '+' : '', signTotal = plWithDiv > 0 ? '+' : '';
 
-        totalCost += sumCost; 
-        totalValue += sumVal;
-        totalDiv += divTotalForStock;
-
+        // 累計到全域總和
+        totalCost += sumCost; totalValue += sumVal; totalDiv += divTotalForStock;
         if (sumVal > 0) { labels.push(p.code); chartData.push(sumVal); }
+
+        // 產生歷年配息的小標籤 HTML
+        var divTagsHtml = divs.map(function(d, j) {
+            return '<div class="div-tag"><span>' + d.date + '</span><span class="amt">$' + d.amount + '</span><span class="del" title="刪除此筆" onclick="delDividend(' + i + ',' + j + ')">✕</span></div>';
+        }).join('');
+        if (divs.length === 0) divTagsHtml = '<div style="font-size:11px;color:var(--text-muted)">尚未新增任何配息</div>';
 
         return '' +
         '<div class="port-card ' + cardCc + '">' +
@@ -649,23 +650,35 @@ function renderPortfolio() {
                     '<div class="port-code">' + p.code + '</div>' +
                     '<div style="font-size:11px; color:var(--text-secondary)">投入成本: ' + sumCost.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>' +
                 '</div>' +
+                // 基礎網格回復為 4 格 (配息移到下方獨立區塊)
                 '<div class="port-grid">' +
-                    '<div><div class="lbl">股數</div><input type="number" step="any" value="' + shares + '" onchange="updatePortfolioItem(' + i + ', \'shares\', this.value)" title="修改股數"></div>' +
-                    '<div><div class="lbl">均價</div><input type="number" step="any" value="' + cost + '" onchange="updatePortfolioItem(' + i + ', \'cost\', this.value)" title="修改均價"></div>' +
-                    '<div><div class="lbl">現價</div><div class="val" style="color:var(--accent-blue)">' + (!isNaN(cur) ? cur.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:4}) : '讀取中') + '</div></div>' +
+                    '<div><div class="lbl">持股股數</div><input type="number" step="any" value="' + shares + '" onchange="updatePortfolioItem(' + i + ', \'shares\', this.value)"></div>' +
+                    '<div><div class="lbl">平均成本</div><input type="number" step="any" value="' + cost + '" onchange="updatePortfolioItem(' + i + ', \'cost\', this.value)"></div>' +
+                    '<div><div class="lbl">即時現價</div><div class="val" style="color:var(--accent-blue)">' + (!isNaN(cur) ? cur.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:4}) : '讀取中') + '</div></div>' +
                     '<div><div class="lbl">目前市值</div><div class="val">' + sumVal.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div></div>' +
-                    // ✅ 新增配息與除息日欄位
-                    '<div><div class="lbl">每股配息</div><input type="number" step="any" value="' + divPerShare + '" onchange="updatePortfolioItem(' + i + ', \'dividend\', this.value)" title="設定每股配息金額"></div>' +
-                    '<div><div class="lbl">除息日</div><input type="date" value="' + divDate + '" onchange="updatePortfolioItem(' + i + ', \'dividendDate\', this.value)" title="設定除息日期"></div>' +
                 '</div>' +
+                
+                // 📝 歷年配息紀錄區塊
+                '<div class="dividend-section">' +
+                    '<div class="div-header">' +
+                        '<div class="title">💰 歷年配息 <span style="font-weight:normal; color:var(--text-secondary);">(累計 <span style="color:var(--up)">' + totalDivPerShare.toFixed(2) + '</span> 元/股)</span></div>' +
+                        '<div class="div-inputs">' +
+                            '<input type="date" id="divDate-' + i + '" title="除息或發放日">' +
+                            '<input type="number" id="divAmt-' + i + '" step="any" placeholder="每股金額" style="width:75px;" onkeypress="if(event.key===\'Enter\') addDividend(' + i + ')">' +
+                            '<button onclick="addDividend(' + i + ')">＋ 新增</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="div-list">' + divTagsHtml + '</div>' +
+                '</div>' +
+
                 '<div class="port-footer">' +
                     '<div style="text-align:left;">' +
-                        '<div style="font-size:12px; color:var(--text-secondary); font-weight:600;">未實現損益</div>' +
-                        '<div style="font-size:10px; color:var(--text-muted); margin-top:3px;">含息損益: <span style="color:' + (plWithDiv > 0 ? 'var(--up)' : plWithDiv < 0 ? 'var(--down)' : '') + '">' + signTotal + plWithDiv.toLocaleString(undefined,{maximumFractionDigits:0}) + '</span></div>' +
+                        '<div style="font-size:12px; color:var(--text-secondary); font-weight:600;">純價差損益</div>' +
+                        '<div style="font-size:11px; color:var(--accent-gold); margin-top:3px; font-weight:bold;">含息總損益: <span style="color:' + (plWithDiv > 0 ? 'var(--up)' : plWithDiv < 0 ? 'var(--down)' : '') + '">' + signTotal + plWithDiv.toLocaleString(undefined,{maximumFractionDigits:0}) + '</span></div>' +
                     '</div>' +
                     '<div style="text-align:right;">' +
-                        '<div class="result-val ' + cc + '">' + sign + pl.toLocaleString(undefined,{maximumFractionDigits:0}) + ' <span style="font-size:14px;">(' + sign + roi.toFixed(2) + '%)</span></div>' +
-                        '<div style="font-size:10px; color:var(--text-muted); margin-top:3px;">含息報酬: <span style="color:' + (roiWithDiv > 0 ? 'var(--up)' : roiWithDiv < 0 ? 'var(--down)' : '') + '">' + signTotal + roiWithDiv.toFixed(2) + '%</span></div>' +
+                        '<div class="result-val ' + cc + '" style="font-size:16px;">' + sign + pl.toLocaleString(undefined,{maximumFractionDigits:0}) + ' <span style="font-size:13px;">(' + sign + roi.toFixed(2) + '%)</span></div>' +
+                        '<div style="font-size:11px; color:var(--accent-gold); margin-top:3px; font-weight:bold;">含息總報酬: <span style="color:' + (roiWithDiv > 0 ? 'var(--up)' : roiWithDiv < 0 ? 'var(--down)' : '') + '">' + signTotal + roiWithDiv.toFixed(2) + '%</span></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -674,15 +687,11 @@ function renderPortfolio() {
     
     listArea.innerHTML = listHtml || '<div style="text-align:center; padding:40px; color:var(--text-muted); font-size:14px;">目前沒有任何持股，請從上方新增。</div>';
 
-    var totalPL = totalValue - totalCost;
-    var totalPLWithDiv = totalPL + totalDiv;
-    var totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0;
-    var totalROIWithDiv = totalCost > 0 ? (totalPLWithDiv / totalCost) * 100 : 0;
-
+    var totalPL = totalValue - totalCost, totalPLWithDiv = totalPL + totalDiv;
+    var totalROI = totalCost > 0 ? (totalPL / totalCost) * 100 : 0, totalROIWithDiv = totalCost > 0 ? (totalPLWithDiv / totalCost) * 100 : 0;
     var tcc = totalPL > 0 ? 'up' : totalPL < 0 ? 'down' : '', tsign = totalPL > 0 ? '+' : '';
     var dtcc = totalPLWithDiv > 0 ? 'up' : totalPLWithDiv < 0 ? 'down' : '', dtsign = totalPLWithDiv > 0 ? '+' : '';
     
-    // ✅ 總資產儀表板同步更新，顯示含息狀態
     sumArea.innerHTML = '' +
     '<div class="port-summary-box">' +
         '<div class="port-metric">' +
@@ -692,12 +701,12 @@ function renderPortfolio() {
         '<div class="port-metric">' +
             '<div class="label">總未實現損益</div>' +
             '<div class="val ' + tcc + '">' + tsign + totalPL.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>' +
-            '<div style="font-size:11px; color:var(--text-muted); margin-top:6px;">含息: <span style="color:var(--' + dtcc + ')">' + dtsign + totalPLWithDiv.toLocaleString(undefined,{maximumFractionDigits:0}) + '</span></div>' +
+            '<div style="font-size:12px; color:var(--accent-gold); margin-top:6px; font-weight:700;">含息: <span style="color:var(--' + dtcc + ')">' + dtsign + totalPLWithDiv.toLocaleString(undefined,{maximumFractionDigits:0}) + '</span></div>' +
         '</div>' +
         '<div class="port-metric">' +
             '<div class="label">總報酬率</div>' +
             '<div class="val ' + tcc + '">' + tsign + totalROI.toFixed(2) + '%</div>' +
-            '<div style="font-size:11px; color:var(--text-muted); margin-top:6px;">含息: <span style="color:var(--' + dtcc + ')">' + dtsign + totalROIWithDiv.toFixed(2) + '%</span></div>' +
+            '<div style="font-size:12px; color:var(--accent-gold); margin-top:6px; font-weight:700;">含息: <span style="color:var(--' + dtcc + ')">' + dtsign + totalROIWithDiv.toFixed(2) + '%</span></div>' +
         '</div>' +
         '<div class="port-chart-container"><canvas id="portPieChart"></canvas></div>' +
     '</div>';
@@ -714,10 +723,7 @@ function renderPortfolio() {
                 responsive: true, maintainAspectRatio: false, cutout: '65%',
                 plugins: {
                     legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(18, 28, 42, 0.95)', titleColor: '#e8f0fe', bodyColor: '#7a9cc4', borderColor: '#2a4878', borderWidth: 1, padding: 10,
-                        callbacks: { label: function(context) { var val = context.raw, pct = ((val / totalValue) * 100).toFixed(1); return ' ' + context.label + ': ' + val.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + pct + '%)'; } }
-                    }
+                    tooltip: { backgroundColor: 'rgba(18, 28, 42, 0.95)', titleColor: '#e8f0fe', bodyColor: '#7a9cc4', borderColor: '#2a4878', borderWidth: 1, padding: 10, callbacks: { label: function(context) { var val = context.raw, pct = ((val / totalValue) * 100).toFixed(1); return ' ' + context.label + ': ' + val.toLocaleString(undefined,{maximumFractionDigits:0}) + ' (' + pct + '%)'; } } }
                 }
             }
         });
@@ -730,29 +736,22 @@ function renderPortfolio() {
 async function fetchAll() {
     if (isFetching) return;
     isFetching = true;
-    var btn = document.getElementById('updateBtn');
-    if (btn) { btn.disabled = true; btn.textContent = '同步中…'; }
+    var btn = document.getElementById('updateBtn'); if (btn) { btn.disabled = true; btn.textContent = '同步中…'; }
 
-    for (let i = 0; i < stocks.length; i++) {
-        await fetchOne(i); await new Promise(resolve => setTimeout(resolve, 200)); 
-    }
-    for (let i = 0; i < portfolio.length; i++) {
-        await fetchOnePortfolio(i); await new Promise(resolve => setTimeout(resolve, 200)); 
-    }
+    for (let i = 0; i < stocks.length; i++) { await fetchOne(i); await new Promise(resolve => setTimeout(resolve, 200)); }
+    for (let i = 0; i < portfolio.length; i++) { await fetchOnePortfolio(i); await new Promise(resolve => setTimeout(resolve, 200)); }
 
     try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     
-    if (btn) btn.textContent = '✅ 同步完成';
-    refreshStatus();
+    if (btn) btn.textContent = '✅ 同步完成'; refreshStatus();
     setTimeout(function() { if (btn) { btn.disabled = false; btn.textContent = '⟳ \u00a0同步最新報價'; } }, 2000);
     isFetching = false;
 }
 
 function manualRefresh() { countdown = AUTO_SEC; fetchAll(); }
 
-var AUTO_SEC = 30;
-var countdown = AUTO_SEC;
+var AUTO_SEC = 30, countdown = AUTO_SEC;
 
 setInterval(function() {
     if (isTradingHours()) { countdown--; if (countdown <= 0) { countdown = AUTO_SEC; fetchAll(); } } else { countdown = AUTO_SEC; }
@@ -760,9 +759,7 @@ setInterval(function() {
 }, 1000);
 
 // ── 系統啟動 ──
-render();
-refreshStatus();
-fetchAll();
+render(); refreshStatus(); fetchAll();
 
 </script>
 </body>
