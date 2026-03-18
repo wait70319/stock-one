@@ -1,5 +1,4 @@
-const CACHE_NAME = 'stock-board-v1';
-// 注意：GitHub Pages 的路徑必須包含 repository 名稱
+const CACHE_NAME = 'stock-board-v2'; // 改成 v2 強制更新
 const urlsToCache = [
   '/stock-one/',
   '/stock-one/index.html',
@@ -7,7 +6,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // 強制立即接管並更新
+  self.skipWaiting(); 
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
@@ -15,13 +14,12 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  // 清除舊版本的快取
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
+            return caches.delete(cacheName); // 刪除舊的 v1 快取
           }
         })
       );
@@ -30,27 +28,26 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // 排除 Yahoo 報價或任何 API 請求，絕對不快取動態數據
+  // 絕對不快取 Yahoo 報價或 API
   if (event.request.url.includes('yahoo') || event.request.url.includes('api')) {
     return;
   }
 
-  // Stale-While-Revalidate 策略：先給快取求快，背景再偷偷更新
+  // 網路優先策略：先抓最新資料，斷網才給快取
   event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.ok) {
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, networkResponse.clone());
-            });
-          }
-          return networkResponse;
-        }).catch(() => {
-          console.log('目前處於離線狀態，使用快取畫面');
+    fetch(event.request).then(networkResponse => {
+      // 確保回應是正常的，才進行快取
+      if (networkResponse && networkResponse.status === 200) {
+        // 必須在這裡立刻 clone
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache);
         });
-
-        return cachedResponse || fetchPromise;
-      })
+      }
+      return networkResponse;
+    }).catch(() => {
+      // 如果沒有網路，就從快取裡拿
+      return caches.match(event.request);
+    })
   );
 });
