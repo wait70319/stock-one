@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+   <link rel="manifest" href="/stock-one/manifest.json">
+  <meta name="theme-color" content="#1e40af">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzFlNDBhZiIvPjx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LXNpemU9IjI4MCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuiCoePC90ZXh0Pjwvc3ZnPg==">
+
+  <script>
+    // 註冊 Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/stock-one/sw.js')
+          .then(registration => {
+            console.log('PWA ServiceWorker 註冊成功，範圍:', registration.scope);
+          })
+          .catch(error => {
+            console.log('PWA ServiceWorker 註冊失敗:', error);
+          });
+      });
+    }
+  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>股市看板</title>
