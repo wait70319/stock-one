@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="manifest" href="/stock-one/manifest.json">
   <meta name="theme-color" content="#1e40af">
  <link rel="apple-touch-icon" href="/stock-one/icon-192.png">
@@ -19,8 +21,6 @@
       });
     }
   </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>股市看板</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -301,7 +301,18 @@ var DEFAULT_STOCKS = [
 var stocks = [];
 try {
     var saved = JSON.parse(localStorage.getItem('stockDataV4') || '[]');
-    stocks = saved.length > 0 ? saved : DEFAULT_STOCKS;
+    if (saved.length > 0) {
+        stocks = saved;
+        // 補上 DEFAULT_STOCKS 裡缺少的群組（例如新增的期貨、外匯）
+        var savedGroups = stocks.map(function(s) { return s.group; });
+        DEFAULT_STOCKS.forEach(function(def) {
+            if (savedGroups.indexOf(def.group) === -1) {
+                stocks.push(def);
+            }
+        });
+    } else {
+        stocks = DEFAULT_STOCKS;
+    }
 } catch(e) { stocks = DEFAULT_STOCKS; }
 
 var portfolio = [];
@@ -362,6 +373,9 @@ var PROXIES = buildProxies();
 
 function twNow() { return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' })); }
 function isTradingHours() {
+    // 若有期貨或外匯品項，視為全天候交易，永遠更新
+    var has24h = stocks.some(function(s) { return s.group && (s.group.indexOf('期貨') !== -1 || s.group.indexOf('外匯') !== -1); });
+    if (has24h) return true;
     var tw = twNow(), day = tw.getDay(), m = tw.getHours() * 60 + tw.getMinutes();
     if (day === 0 || day === 6) return false; return m >= 540 && m <= 830;
 }
@@ -476,7 +490,7 @@ function calculateAll(i) {
     }
     if (high > 0) {
         [5, 10, 15, 20, 25, 30].forEach(function(p) { var target = high * (1 - p / 100), el = document.getElementById('dp-' + p + '-' + i); if (!el) return; var hit = !isNaN(cur) && cur <= target; el.innerHTML = (hit ? '<span class="hit-star">&#9733;</span>' : '') + target.toFixed(fd); el.closest('.grid-item').classList.toggle('hit', hit); });
-        var range = high - low; [236, 382, 500, 618].forEach(function(f) { var el = document.getElementById('fib-' + f + '-' + i); if (el) el.textContent = (high - range * (f / 1000)).toFixed(fd); });
+        var range = high - low; if (low > 0 && range > 0) { [236, 382, 500, 618].forEach(function(f) { var el = document.getElementById('fib-' + f + '-' + i); if (el) el.textContent = (high - range * (f / 1000)).toFixed(fd); }); } else { [236, 382, 500, 618].forEach(function(f) { var el = document.getElementById('fib-' + f + '-' + i); if (el) el.textContent = '—'; }); }
     }
 }
 
@@ -485,7 +499,7 @@ function calculateAll(i) {
 // ═══════════════════════════════════════════
 function onInputChange(i) { stocks[i].highest = document.getElementById('inp-hi-' + i).value; stocks[i].low = document.getElementById('inp-lo-' + i).value; stocks[i].current = document.getElementById('inp-cur-' + i).value; calculateAll(i); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} }
 function onGroupChange(i) { stocks[i].group = document.getElementById('inp-grp-' + i).value.trim() || '未分類'; try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} render(); }
-function onYahooChange(i) { stocks[i].yahoo = document.getElementById('inp-sym-' + i).value.trim(); fetchOne(i); }
+function onYahooChange(i) { stocks[i].yahoo = document.getElementById('inp-sym-' + i).value.trim(); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} fetchOne(i); }
 function deleteStock(i) { if (!confirm('確定刪除「' + stocks[i].code + '」？')) return; if (chartInst[i]) { chartInst[i].destroy(); chartInst[i] = null; } stocks.splice(i, 1); try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {} render(); }
 
 function guessYahooCode(raw) { var v = raw.trim().toUpperCase(); if (v.indexOf('.') >= 0 || v.indexOf('=') >= 0 || v.charAt(0) === '^') return v; return v.replace(/[^A-Z0-9]/g, '') + '.TW'; }
@@ -759,7 +773,9 @@ async function fetchAll() {
     for (let i = 0; i < stocks.length; i++) { await fetchOne(i); await new Promise(resolve => setTimeout(resolve, 200)); }
     for (let i = 0; i < portfolio.length; i++) { await fetchOnePortfolio(i); await new Promise(resolve => setTimeout(resolve, 200)); }
 
-    try { localStorage.setItem('stockDataV4', JSON.stringify(stocks)); } catch(e) {}
+    // 儲存時排除 lastChartData，避免 localStorage 過大
+    var stocksToSave = stocks.map(function(s) { var c = Object.assign({}, s); delete c.lastChartData; delete c.lastPrevClose; return c; });
+    try { localStorage.setItem('stockDataV4', JSON.stringify(stocksToSave)); } catch(e) {}
     try { localStorage.setItem('portfolioDataV1', JSON.stringify(portfolio)); } catch(e) {}
     
     if (btn) btn.textContent = '✅ 同步完成'; refreshStatus();
